@@ -1,0 +1,82 @@
+<template>
+    <div class="split-container">
+        <div class="brand-panel">
+            <div class="brand-content">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 40 46" width="36" height="42" aria-hidden="true">
+                        <path d="M20 2 L37 8 V23 C37 33 30 40 20 44 C10 40 3 33 3 23 V8 Z" fill="#24335C" stroke="#E8A33D" stroke-width="2" stroke-linejoin="round"></path>
+                        <path d="M7 24 H14 L17 15 L22 32 L26 21 L28 24 H33" fill="none" stroke="#E8A33D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span>Care Compass</span>
+                </div>
+                <h2 class="brand-headline">Know exactly where you stand with your care.</h2>
+
+                <p class="brand-intro">Care Compass brings your bills, your coverage, and your care team into one place — so you're never guessing what something costs or who's actually in-network.</p>
+
+                <ul class="brand-points">
+                    <li>See exactly what you owe on every medical bill</li>
+                    <li>Compare charges against typical, fair rates</li>
+                    <li>Find in-network doctors near you</li>
+                    <li>Request appointments without the back-and-forth</li>
+                    <li>Catch billing errors before you pay them</li>
+                    <li>Get a ready-to-send letter when a charge looks too high</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-panel">
+            <div class="registration-container">
+                <div class="mobile-logo">
+                    <svg viewBox="0 0 40 46" width="30" height="35" aria-hidden="true">
+                        <path d="M20 2 L37 8 V23 C37 33 30 40 20 44 C10 40 3 33 3 23 V8 Z" fill="#24335C" stroke="#E8A33D" stroke-width="2" stroke-linejoin="round"></path>
+                        <path d="M7 24 H14 L17 15 L22 32 L26 21 L28 24 H33" fill="none" stroke="#E8A33D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span>Care Compass</span>
+                </div>
+                <h1 class="title">Create Your Account</h1>
+                <p class="subtitle">Register to check your medical bills against your coverage.</p>
+
+                <template if:true={errorMessage}>
+                    <div class="error-box">{errorMessage}</div>
+                </template>
+
+                <template if:true={successMessage}>
+                    <div class="success-box">{successMessage}</div>
+                </template>
+
+                <template if:false={isSubmitted}>
+                    <div class="form-grid">
+                        <lightning-input label="First Name" value={firstName} onchange={handleFirstName} required></lightning-input>
+                        <lightning-input label="Last Name" value={lastName} onchange={handleLastName} required></lightning-input>
+                        <lightning-input type="email" label="Email" value={email} onchange={handleEmail} required></lightning-input>
+                        <div class="password-field">
+                            <lightning-input type="password" label="Password" value={password} onchange={handlePassword} required></lightning-input>
+                            <template if:true={hasPasswordChecks}>
+                                <ul class="slds-m-top_xx-small slds-text-body_small" aria-live="polite">
+                                    <template for:each={passwordChecks} for:item="rule">
+                                        <li key={rule.key} class={rule.cssClass}>{rule.icon} {rule.text}</li>
+                                    </template>
+                                </ul>
+                            </template>
+                        </div>
+                        <lightning-input type="date" label="Date of Birth" value={dob} max={maxDob} onchange={handleDob} required></lightning-input>
+                        <lightning-combobox label="Gender" value={gender} options={genderOptions} onchange={handleGender} required></lightning-combobox>
+                        <lightning-input type="tel" label="Mobile Number" value={phone} onchange={handlePhone}
+                            field-level-help="10 digits, optionally with +1 or +91 first, for example 4015551234 or +91 9876543210." required></lightning-input>
+                    </div>
+
+                    <div class="button-row">
+                        <lightning-button
+                            variant="brand"
+                            label={submitLabel}
+                            onclick={handleSubmit}
+                            disabled={isSubmitting}
+                            class="submit-button">
+                        </lightning-button>
+                    </div>
+                    <p class="have-account">Already have an account? <button type="button" class="login-link" onclick={handleBack}>Log in</button></p>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

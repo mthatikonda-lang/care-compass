@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Coverage_Pct_Required_For_Coinsurance</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Cost_Sharing_Method__c, &quot;Deductible + Coinsurance&quot;), ISBLANK( Coverage_Percentage__c ))</errorConditionFormula>
+    <errorDisplayField>Coverage_Percentage__c</errorDisplayField>
+    <errorMessage>Enter a coverage percentage for a deductible + coinsurance rule.</errorMessage>
+</ValidationRule>

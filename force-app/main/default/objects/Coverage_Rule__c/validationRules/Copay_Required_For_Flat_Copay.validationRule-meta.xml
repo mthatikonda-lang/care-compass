@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copay_Required_For_Flat_Copay</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Cost_Sharing_Method__c, &quot;Flat Copay&quot;), ISBLANK(Copay_Amount__c))</errorConditionFormula>
+    <errorDisplayField>Copay_Amount__c</errorDisplayField>
+    <errorMessage>Enter a copay amount for a flat copay rule.</errorMessage>
+</ValidationRule>

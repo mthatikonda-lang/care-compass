@@ -1,0 +1,299 @@
+<template>
+    <div class="page">
+        <c-app-nav active="home" heading={heroTitle} subtitle={planLabel}></c-app-nav>
+        <div class="body">
+        <template lwc:if={isLoading}>
+            <p class="state">Loading your dashboard…</p>
+        </template>
+
+        <template lwc:if={error}>
+            <p class="state state-error">{error}</p>
+        </template>
+
+        <template lwc:if={showEmpty}>
+            <div class="empty-hero">
+                <h1 class="serif">Let's get you set up</h1>
+                <p>Complete your profile and your bills and appointments will show up here.</p>
+                <button class="btn btn-primary" onclick={goProfile}>Set up my profile</button>
+            </div>
+        </template>
+
+        <template lwc:if={isNewPatient}>
+            <div class="welcome">
+                <span class="welcome-eyebrow">Your dashboard</span>
+                <h2 class="serif welcome-title">Welcome, let's get started</h2>
+                <p class="welcome-lede">Nothing here yet. Pick where to begin and your bills, appointments and savings will show up on this page.</p>
+                <div class="welcome-tiles">
+                    <div class="welcome-tile">
+                        <div class="welcome-top">
+                            <span class="welcome-num">1</span>
+                            <span class="welcome-art" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect class="art-fill" x="14" y="8" width="36" height="48" rx="6" fill="#FFF4DC" stroke="#16213E" stroke-width="2.5"></rect>
+                                    <path d="M22 20h20M22 28h20M22 36h12" stroke="#16213E" stroke-width="2.5"></path>
+                                    <circle class="art-badge" cx="44" cy="44" r="10" fill="#E8A33D" stroke="#16213E" stroke-width="2.5"></circle>
+                                    <path class="art-check" d="M39.5 44l3.2 3.2 6-6.4" stroke="#16213E" stroke-width="2.8"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <h3 class="welcome-h">Check your first bill</h3>
+                        <p class="welcome-p">Paste or upload an itemized bill and see what insurance pays and what you owe.</p>
+                        <ul class="welcome-points">
+                            <li>Flags charges above the typical price</li>
+                            <li>Compares with your plan</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick={goCheckBill}>Check a bill<span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+                    </div>
+                    <div class="welcome-tile">
+                        <div class="welcome-top">
+                            <span class="welcome-num">2</span>
+                            <span class="welcome-art" aria-hidden="true">
+                                <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path class="art-pin" d="M32 58C20 44 14 36 14 26a18 18 0 0 1 36 0c0 10-6 18-18 32z" fill="#FFF4DC" stroke="#16213E" stroke-width="2.5"></path>
+                                    <path d="M32 18v16M24 26h16" stroke="#E8A33D" stroke-width="4.5"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <h3 class="welcome-h">Find a doctor</h3>
+                        <p class="welcome-p">Describe what is going on and see matched doctors with an estimated cost.</p>
+                        <ul class="welcome-points">
+                            <li>Matched to your symptoms</li>
+                            <li>Request an appointment in a few taps</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick={goFindCare}>Find care<span class="btn-arrow" aria-hidden="true">&rarr;</span></button>
+                    </div>
+                </div>
+                <div class="welcome-trust">
+                    <span>Takes about 2 minutes</span>
+                    <span>Your information stays private</span>
+                    <span>Estimates, not guarantees</span>
+                </div>
+            </div>
+        </template>
+
+        <template lwc:if={showDashboard}>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>
+                    <p class="stat-label">Bills checked</p>
+                    <p class="stat-value">{billsChecked}</p>
+                    <p class="stat-sub">{billsCheckedNote}</p>
+                </div>
+                <div class="stat">
+                    <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></span>
+                    <p class="stat-label">Charges flagged</p>
+                    <p class="stat-value">{flaggedCount}</p>
+                    <p class="stat-sub">{flaggedNote}</p>
+                </div>
+                <div class="stat stat-accent">
+                    <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.2c-.4-.8-1.4-1.2-2.5-1.2-1.4 0-2.5.7-2.5 1.8 0 2.4 5 1.2 5 3.6 0 1.1-1.1 1.8-2.5 1.8-1.2 0-2.2-.5-2.6-1.4M12 6.5V8M12 16v1.5"/></svg></span>
+                    <p class="stat-label">Billed amount to review</p>
+                    <p class="stat-value">{flaggedAmountText}</p>
+                    <p class="stat-sub">Charges priced above the typical rate. You can ask the provider to review them.</p>
+                </div>
+            </div>
+            <div class="grid">
+                <!-- Out of pocket -->
+                <section class="card">
+                    <h2 class="card-title serif">Out-of-pocket this year<span role="button" tabindex="0" aria-label="What is the out-of-pocket maximum?" data-text={tipOopText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:var(--cc-muted, #6B7280);font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span></h2>
+                    <template lwc:if={hasOopMax}>
+                        <div class="oop">
+                            <div class="ring" style={ringStyle}>
+                                <div class="ring-inner">
+                                    <span class="ring-pct">{oopPercent}%</span>
+                                    <span class="ring-cap">of your max</span>
+                                </div>
+                            </div>
+                            <div class="oop-text">
+                                <p class="big">{spentText}</p>
+                                <p class="muted">of {oopMaxText} yearly maximum</p>
+                                <p class="note">{oopRemainingText} left before your plan pays 100%</p>
+                            </div>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <p class="big">{spentText}</p>
+                        <p class="muted">Add your insurance plan to see how close you are to your yearly maximum.</p>
+                    </template>
+                </section>
+
+                <!-- Billed vs covered -->
+                <section class="card">
+                    <h2 class="card-title serif">Billed vs covered</h2>
+                    <div class="kpis">
+                        <div class="kpi">
+                            <p class="kpi-label">Total billed</p>
+                            <p class="kpi-value">{billedText}</p>
+                        </div>
+                        <div class="kpi">
+                            <p class="kpi-label">Insurance paid<span role="button" tabindex="0" aria-label="What does insurance paid mean?" data-text={tipPaidText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:var(--cc-muted, #6B7280);font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span></p>
+                            <p class="kpi-value">{coveredText}</p>
+                        </div>
+                        <div class="kpi">
+                            <p class="kpi-label">You owe<span role="button" tabindex="0" aria-label="What does you owe mean?" data-text={tipOweText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:var(--cc-muted, #6B7280);font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span></p>
+                            <p class="kpi-value kpi-owe">{oweText}</p>
+                        </div>
+                    </div>
+                    <template lwc:if={hasBilled}>
+                        <div class="stack">
+                            <span class="seg seg-cov" style={coveredSegStyle}></span>
+                            <span class="seg seg-owe" style={oweSegStyle}></span>
+                        </div>
+                        <div class="legend">
+                            <span><i class="dot dot-cov"></i>Insurance {coveredPct}%</span>
+                            <span><i class="dot dot-owe"></i>You {oweePct}%</span>
+                        </div>
+                    </template>
+                </section>
+
+                <!-- Appointments -->
+                <section class="card">
+                    <h2 class="card-title serif">Appointments</h2>
+                    <template lwc:if={hasConfirmed}>
+                        <p style="font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--cc-muted, #6B7280);margin:14px 0 6px;">Confirmed appointments</p>
+                        <ul class="list">
+                            <template for:each={visibleConfirmed} for:item="a">
+                                <li key={a.id} class="row">
+                                    <div class="date-chip">
+                                        <span class="mon">{a.month}</span>
+                                        <span class="day">{a.day}</span>
+                                    </div>
+                                    <div class="row-main">
+                                        <p class="row-title">{a.doctorName}</p>
+                                        <p class="row-sub">{a.subline}</p>
+                                    </div>
+                                    <div class="row-end">
+                                        <p class="row-amt">{a.costText}</p>
+                                        <span class="pill pill-in">Confirmed</span>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                        <template if:true={moreConfirmed.show}><button class="more-btn" data-list="confirmed" onclick={toggleList}>{moreConfirmed.label}</button></template>
+                    </template>
+                    <template lwc:if={hasRequested}>
+                        <p style="font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--cc-muted, #6B7280);margin:14px 0 6px;">Waiting for the office to call</p>
+                        <p class="muted">A request is not a confirmed appointment until the office calls you. After the call, tap Confirm and enter the date you agreed on.</p>
+                        <ul class="list">
+                            <template for:each={visibleRequested} for:item="a">
+                                <li key={a.id} class="row">
+                                    <div class="date-chip">
+                                        <span class="mon">{a.month}</span>
+                                        <span class="day">{a.day}</span>
+                                    </div>
+                                    <div class="row-main">
+                                        <p class="row-title">{a.doctorName}</p>
+                                        <p class="row-sub">{a.subline}</p>
+                                        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;">
+                                            <span style="display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--cc-gold-tint, #FFF4DC);color:var(--cc-gold-text, #9A5B00);border:1px solid #E8A33D;">Requested</span>
+                                            <span class={a.badgeClass}>{a.badgeLabel}</span>
+                                        </div>
+                                        <template if:true={a.showForm}>
+                                            <div style="margin-top:10px;padding:12px;background:var(--cc-gold-tint, #FFF4DC);border:1px solid #E8A33D;border-radius:10px;">
+                                                <label style="display:block;font-size:13px;font-weight:600;color:var(--cc-ink, #16213E);margin-bottom:6px;">Date the office confirmed</label>
+                                                <input aria-label="Date the office confirmed" type="date" min={minConfirmDate} value={confirmDate} onchange={handleConfirmDateChange}
+                                                    style="width:100%;box-sizing:border-box;padding:9px 12px;font-size:14px;color:var(--cc-text, #2B3340);background:var(--cc-surface, #fff);border:1px solid var(--cc-border, #E4DED2);border-radius:8px;" />
+                                                <template if:true={confirmError}>
+                                                    <p style="margin:8px 0 0;font-size:13px;color:var(--cc-red-text, #B3261E);">{confirmError}</p>
+                                                </template>
+                                                <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                                                    <button style="border:1px solid #CBD2DC;background:var(--cc-surface, #fff);color:var(--cc-ink, #16213E);font-family:inherit;font-size:13px;font-weight:600;line-height:1;padding:10px 20px;border-radius:999px;cursor:pointer;" onclick={handleCancelConfirm} disabled={isConfirming}>Cancel</button>
+                                                    <button style="border:none;background:var(--cc-navy, #16213E);color:#fff;font-family:inherit;font-size:13px;font-weight:600;line-height:1;padding:10px 20px;border-radius:999px;cursor:pointer;" onclick={handleSaveConfirm} disabled={isConfirming}>{confirmSaveLabel}</button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="row-end">
+                                        <p class="row-amt">{a.costText}</p>
+                                        <template if:true={a.isRequested}>
+                                            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;">
+                                                <template if:false={a.showForm}>
+                                                    <button style="border:none;background:var(--cc-navy, #16213E);color:#fff;font-family:inherit;font-size:13px;font-weight:600;line-height:1;padding:10px 20px;border-radius:999px;cursor:pointer;" data-id={a.id} onclick={handleStartConfirm}>Confirm</button>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                        <template if:true={moreRequested.show}><button class="more-btn" data-list="requested" onclick={toggleList}>{moreRequested.label}</button></template>
+                    </template>
+                    <template lwc:if={hasAppointments}></template>
+                    <template lwc:else>
+                        <div class="empty">
+                            <span class="empty-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15h6"/></svg></span>
+                            <p>No appointments yet.</p>
+                            <button class="btn btn-outline" onclick={goFindCare}>Find a doctor</button>
+                        </div>
+                    </template>
+                </section>
+
+                <!-- Request history -->
+                <section class="card">
+                    <h2 class="card-title serif">Request history</h2>
+                    <p class="muted">Past requests whose requested date has passed.</p>
+                    <template lwc:if={hasHistory}>
+                        <ul class="list">
+                            <template for:each={visibleHistory} for:item="h">
+                                <li key={h.id} class="row">
+                                    <div class="row-main">
+                                        <p class="row-title">{h.doctorName}</p>
+                                        <p class="row-sub">Requested {h.requestedText}</p>
+                                        <p class="row-sub">{h.subline}</p>
+                                    </div>
+                                    <div class="row-end">
+                                        <span class="pill pill-status">{h.statusLabel}</span>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                        <template if:true={moreHistory.show}><button class="more-btn" data-list="history" onclick={toggleList}>{moreHistory.label}</button></template>
+                    </template>
+                    <template lwc:else>
+                        <div class="empty">
+                            <span class="empty-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+                            <p>No past requests.</p>
+                        </div>
+                    </template>
+                </section>
+
+                <!-- Bills -->
+                <section class="card">
+                    <h2 class="card-title serif">Recent bills</h2>
+                    <template lwc:if={hasBills}>
+                        <ul class="list">
+                            <template for:each={visibleBills} for:item="b">
+                                <li key={b.id} class="row row-bill row-link" data-id={b.id} role="link" tabindex="0" aria-label="Open bill summary" onclick={openBill} onkeydown={openBillKey}>
+                                    <div class="row-main">
+                                        <p class="row-title">{b.provider}</p>
+                                        <p class="row-sub">{b.dateText} · {b.coveredPct}% covered</p>
+                                        <template if:true={b.billNumber}><p class="row-sub">Bill no. {b.billNumber}</p></template>
+                                        <div class="mini"><span style={b.barStyle}></span></div>
+                                    </div>
+                                    <div class="row-end">
+                                        <p class="row-amt">{b.oweText}</p>
+                                        <p class="row-sub">you owe</p>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                        <template if:true={moreBills.show}><button class="more-btn" data-list="bills" onclick={toggleList}>{moreBills.label}</button></template>
+                    </template>
+                    <template lwc:else>
+                        <div class="empty">
+                            <span class="empty-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>
+                            <p>No bills checked yet.</p>
+                            <button class="btn btn-outline" onclick={goCheckBill}>Check a bill</button>
+                        </div>
+                    </template>
+                </section>
+            </div>
+        </template>
+        </div>
+        <c-app-footer></c-app-footer>
+    </div>
+
+    <template if:true={tipVisible}>
+        <div role="tooltip" style={tipBoxStyle}>{tipBoxText}</div>
+    </template>
+</template>

@@ -1,0 +1,247 @@
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #16213E;
+    background: #FBF8F3;
+    min-height: 100vh;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.profile-menu {
+    position: relative;
+}
+
+.profile-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #16213E;
+    color: #E8A33D;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-avatar:hover {
+    background: #1F2E52;
+}
+
+.profile-dropdown {
+    position: absolute;
+    right: 0;
+    top: 52px;
+    background: #FFFFFF;
+    border: 1px solid #E2E4E0;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 260px;
+    box-shadow: 0 4px 16px rgba(22, 33, 62, 0.12);
+    z-index: 10;
+}
+
+.profile-dropdown-name {
+    font-weight: 700;
+    color: #16213E;
+    font-size: 0.9rem;
+    margin: 0 0 0.2rem;
+}
+
+.profile-dropdown-email {
+    font-size: 0.8rem;
+    color: #5B6472;
+    margin: 0;
+    word-break: break-all;
+}
+
+.profile-dropdown-divider {
+    border: none;
+    border-top: 1px solid #E2E4E0;
+    margin: 0.75rem 0;
+}
+
+.profile-dropdown-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #8A93A3;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0.5rem 0 0.15rem;
+}
+
+.profile-dropdown-value {
+    font-size: 0.85rem;
+    color: #16213E;
+    margin: 0;
+}
+
+.profile-dropdown-link {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #16213E;
+    text-decoration: underline;
+    font-size: 0.85rem;
+    text-align: left;
+    padding: 0.5rem 0 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.profile-dropdown-logout {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #A6362F;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: left;
+    padding: 0.4rem 0;
+    cursor: pointer;
+}
+
+.profile-dropdown-logout:hover {
+    text-decoration: underline;
+}
+
+.welcome-banner h1 {
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: 2.75rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #5B6472;
+    margin-bottom: 3rem;
+    font-size: 1.15rem;
+}
+
+.dashboard-columns {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: stretch;
+}
+
+.getting-started {
+    flex: 1;
+    background: #16213E;
+    border-radius: 10px;
+    padding: 2.5rem;
+}
+
+.getting-started h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #E8A33D;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.step-item {
+    display: flex;
+    gap: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(251, 248, 243, 0.12);
+}
+
+.step-item:last-child {
+    border-bottom: none;
+}
+
+.step-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(232, 163, 61, 0.2);
+    color: #E8A33D;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FBF8F3;
+    margin-bottom: 0.2rem;
+}
+
+.step-desc {
+    font-size: 1rem;
+    color: rgba(251, 248, 243, 0.65);
+    line-height: 1.5;
+}
+
+.card-stack {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.nav-card {
+    flex: 1;
+    background: #FFFFFF;
+    border: 1px solid #E2E4E0;
+    border-top: 4px solid #E8A33D;
+    border-radius: 10px;
+    padding: 2.25rem;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.nav-card:hover {
+    box-shadow: 0 4px 16px rgba(22, 33, 62, 0.08);
+    transform: translateY(-1px);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.nav-card h2 {
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #16213E;
+}
+
+.nav-card p {
+    color: #5B6472;
+    font-size: 1.05rem;
+}
+
+.loading, .error {
+    text-align: center;
+    color: #8A93A3;
+    padding: 3rem 0;
+}
+
+.error {
+    color: #A6362F;
+}
+
+@media (max-width: 700px) {
+    .dashboard-columns {
+        flex-direction: column;
+    }
+}

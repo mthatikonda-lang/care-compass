@@ -1,0 +1,84 @@
+<template>
+    <div class="ins-page">
+        <c-app-nav active="insurance" hide-menu={hideMenu} heading="Health Insurance" subtitle="Let's make sure we check your bills against the right coverage. This takes less than a minute."></c-app-nav>
+
+        <div class="ins-body">
+            <div class="ins-card">
+
+                <template if:true={errorMessage}>
+                    <p class="error-text">{errorMessage}</p>
+                </template>
+
+                <template if:true={isLoading}>
+                    <p class="loading">Loading…</p>
+                </template>
+
+                <template if:false={isLoading}>
+                    <div class="form-fields">
+                        <div class="ins-question" role="radiogroup" aria-labelledby="ins-q-label">
+                            <p class="ins-q" id="ins-q-label"><span class="ins-req">*</span> Do you have a current, valid insurance plan?</p>
+                            <div class="ins-options">
+                                <template for:each={optionCards} for:item="opt">
+                                    <div key={opt.value} class={opt.cls} role="radio" aria-checked={opt.checked} tabindex="0" data-value={opt.value} onclick={handleOptionClick} onkeydown={handleOptionKey}>
+                                        <span class="ins-dot"><span class="ins-dot-in"></span></span>
+                                        <span class="ins-opt-label">{opt.label}</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <template if:true={showInsuranceFields}>
+                            <div class="ins-reveal">
+                            <lightning-combobox
+                                label="Who's your insurance provider?"
+                                placeholder="Please select"
+                                value={selectedPlanId}
+                                options={planOptions}
+                                onchange={handlePlanChange}
+                                required>
+                            </lightning-combobox>
+
+                            <lightning-input
+                                label="Subscriber ID"
+                                value={subscriberId}
+                                onchange={handleSubscriberIdChange}
+                                required>
+                            </lightning-input>
+                            </div>
+                        </template>
+                    </div>
+
+                    <template if:true={confirmingChange}>
+                        <div style="background:#FFF4DC;border:1px solid #E8A33D;border-radius:8px;padding:12px 14px;margin:12px 0;color:#2B3340;font-size:14px;line-height:1.4;">
+                            <p>{subscriberChangeMessage}</p>
+                            <lightning-button variant="neutral" label="Keep editing" onclick={handleCancelChange}></lightning-button>
+                            <lightning-button variant="brand" label="Yes, save change" onclick={handleConfirmChange} class="slds-m-left_small"></lightning-button>
+                        </div>
+                    </template>
+
+                    <template if:false={confirmingChange}>
+                    <div class="button-row">
+                        <template if:true={showBack}>
+                            <lightning-button
+                                variant="neutral"
+                                label="Back"
+                                onclick={handleBack}
+                                disabled={isSubmitting}
+                                class="back-button">
+                            </lightning-button>
+                        </template>
+                        <lightning-button
+                            variant="brand"
+                            label={submitLabel}
+                            onclick={handleSave}
+                            disabled={isSubmitting}
+                            class="submit-button">
+                        </lightning-button>
+                    </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+        <c-app-footer></c-app-footer>
+    </div>
+</template>

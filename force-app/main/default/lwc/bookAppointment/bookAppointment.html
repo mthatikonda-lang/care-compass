@@ -1,0 +1,227 @@
+<template>
+    <div class="fc-page">
+        <c-app-nav active="find" heading="Find the right doctor" subtitle="Tell us what's going on and we'll match you to the right kind of doctor.">
+            <div class="fc-steps">
+                <div class="fc-step"><span class="fc-dot" data-active={isIssueStep}>1</span>Describe your issue</div>
+                <div class="fc-step"><span class="fc-dot" data-active={isDoctorStep}>2</span>Pick a matched doctor</div>
+                <div class="fc-step"><span class="fc-dot" data-active={isDetailsStep}>3</span>See your estimate</div>
+                <div class="fc-step"><span class="fc-dot" data-active={isConfirmStep}>4</span>Request a callback</div>
+                <template if:true={showStepBack}>
+                    <button class="fc-back" onclick={handleStepBack}>&#8592; Back</button>
+                </template>
+            </div>
+            <template if:true={isDoctorStep}>
+                <p class="fc-hint">Tap the <strong>i</strong> next to a term for a plain-language meaning.</p>
+            </template>
+            <template if:true={isConfirmStep}>
+                <p class="fc-hint">Tap the <strong>i</strong> next to a term for a plain-language meaning.</p>
+            </template>
+        </c-app-nav>
+
+        <div class="fc-body">
+            <div class="fc-card">
+
+                <template if:true={isIssueStep}>
+                    <h1 class="title">What's going on?</h1>
+                    <p class="lede">Tell us what you're dealing with, and we'll point you to the right kind of doctor.</p>
+
+                    <label class="field-label" for="issue">What's the issue? <span class="field-optional">(required)</span></label>
+                    <textarea id="issue" class="issue-input" rows="3" placeholder="For example: my knee has been hurting for a few days" onchange={handleIssueChange}></textarea>
+
+                    <label class="field-label" for="city">Preferred area <span class="field-optional">(optional)</span></label>
+                    <select id="city" class="field-input" onchange={handleCityChange}>
+                        <template for:each={cityOptions} for:item="opt">
+                            <option key={opt.value} value={opt.value} selected={opt.selected}>{opt.label}</option>
+                        </template>
+                    </select>
+
+                    <label class="field-label" for="zip">Your ZIP code <span class="field-optional">(optional)</span></label>
+                    <input id="zip" type="text" inputmode="numeric" maxlength="5" class="field-input" placeholder="e.g. 02865" value={zipCode} oninput={handleZipChange} />
+
+                    <template if:true={showDistance}>
+                        <label class="field-label" for="distance">Distance</label>
+                        <select id="distance" class="field-input" onchange={handleDistanceChange}>
+                            <template for:each={distanceSelectOptions} for:item="opt">
+                                <option key={opt.value} value={opt.value} selected={opt.selected}>{opt.label}</option>
+                            </template>
+                        </select>
+                    </template>
+
+                    <template if:true={errorMessage}>
+                        <p class="error-text">{errorMessage}</p>
+                    </template>
+
+                    <button class="btn-primary" disabled={isSubmitting} onclick={handleFindDoctors}>Find a doctor</button>
+                </template>
+
+                <template if:true={isDoctorStep}>
+                    <h1 class="title">Pick a doctor</h1>
+                    <p class="lede">Matches for your issue are shown first.</p>
+
+                    <template if:true={showEmergencyNotice}>
+                        <p class="emergency-notice">What you describe may be an emergency. If you have chest pain, trouble breathing, or severe bleeding, call 911 or go to the nearest ER instead of booking a visit.</p>
+                    </template>
+
+                    <div style="display:flex;flex-direction:column;gap:12px;margin:20px 0 22px;">
+                        <div style="position:relative;">
+                            <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A8F98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+                            </svg>
+                            <input id="doctorName" type="text" aria-label="Search by doctor name" placeholder="Search by doctor name or a letter"
+                                value={nameFilter} oninput={handleNameFilter}
+                                style="width:100%;box-sizing:border-box;padding:13px 16px 13px 42px;font-size:15px;color:#2B3340;background:#fff;border:1px solid #E4DED2;border-radius:12px;outline:none;" />
+                        </div>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;" role="group" aria-label="Network filter">
+                            <template for:each={networkPills} for:item="pill">
+                                <button key={pill.value} type="button" data-value={pill.value} onclick={handleNetworkPill} style={pill.style}>{pill.label}</button>
+                            </template>
+                        </div>
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;" role="group" aria-label="Sort doctors">
+                            <span style="font-size:13px;font-weight:600;color:#6B7280;">Sort by</span>
+                            <template for:each={sortPills} for:item="pill">
+                                <button key={pill.value} type="button" data-value={pill.value} onclick={handleSortPill} style={pill.style}>{pill.label}</button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <template if:true={noFilteredDoctors}>
+                        <p class="lede" style="margin-bottom:16px;">No doctors match your search. Try a different name or network filter.</p>
+                    </template>
+
+                    <div class="doctor-list">
+                        <template for:each={visibleDoctors} for:item="doctor">
+                            <button key={doctor.doctorId} class={doctor.cardClass} data-id={doctor.doctorId} onclick={handleSelectDoctor}>
+                                <div class="doctor-accent"></div>
+                                <div class="doctor-body">
+                                    <div class="doctor-name">{doctor.doctorName}</div>
+                                    <div class="doctor-meta">{doctor.metaLine}</div>
+                                </div>
+                                <div class="doctor-badges">
+                                    <template if:true={doctor.badgeLabel}>
+                                        <span class="badge badge-suggested">{doctor.badgeLabel}</span>
+                                    </template>
+                                    <template if:true={doctor.locationLabel}>
+                                        <span class="badge badge-location">{doctor.locationLabel}</span>
+                                    </template>
+                                    <template if:true={doctor.networkLabel}>
+                                        <span class={doctor.networkBadgeClass}>{doctor.networkLabel}<span role="button" tabindex="0" aria-label="What does this mean?" data-text={doctor.tipText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:#6B7280;font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span></span>
+                                    </template>
+                                    <template if:true={doctor.priceLabel}>
+                                        <span class="badge badge-price">{doctor.priceLabel}<span role="button" tabindex="0" aria-label="Where does this price come from?" data-text={doctor.priceTip} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:#6B7280;font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span></span>
+                                    </template>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+
+
+                    <p class="list-count">{doctorCountLabel}</p>
+                    <template if:true={hasMoreDoctors}>
+                        <button class="btn-ghost btn-more" onclick={handleShowMore}>{showMoreLabel}</button>
+                    </template>
+
+                </template>
+
+                <template if:true={isDetailsStep}>
+                    <h1 class="title">Visit details</h1>
+                    <p class="lede">Booking with {selectedDoctor.doctorName}</p>
+
+                    <p class="field-label">Visit type</p>
+                    <div class="field-input" style="background:#F3F4F6;color:#2B3340;cursor:default;">{procedureLabel}</div>
+
+                    <label class="field-label" for="date">Preferred date</label>
+                    <input id="date" type="date" class="field-input" min={minDate} onchange={handleDateChange} />
+
+                    <template if:true={errorMessage}>
+                        <p class="error-text">{errorMessage}</p>
+                    </template>
+
+                    <div class="btn-row">
+                        <button class="btn-primary" disabled={detailsSubmitDisabled} onclick={handleGetEstimate}>Get estimate</button>
+                    </div>
+                </template>
+
+                <template if:true={isConfirmStep}>
+                    <h1 class="title">Your estimate</h1>
+
+                    <template if:true={duplicateWarning}>
+                        <p class="dup-warning" role="alert">{duplicateWarning}</p>
+                    </template>
+
+                    <div class="estimate-card">
+                        <p class="estimate-provider">{estimateResult.headerLine}</p>
+                        <template if:true={estimateResult.hasEstimate}>
+                            <p class="estimate-provider">{estimateResult.serviceLine}</p>
+                        </template>
+                        <template if:true={estimateResult.hasEstimate}>
+                            <p class="estimate-cost">${estimateResult.costDisplay}</p>
+                            <template if:true={estimateResult.showNetwork}>
+                                <span class={estimateResult.networkClass}>{estimateResult.networkLabel}<span role="button" tabindex="0" aria-label="What does this mean?" data-text={tipEstNetworkText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:#6B7280;font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span></span>
+                            </template>
+                        </template>
+                        <template if:false={estimateResult.hasEstimate}>
+                            <p class="estimate-message">{estimateResult.noEstimateMessage}</p>
+                        </template>
+                    </div>
+
+                    <template if:true={estimateResult.hasEstimate}>
+                        <p class="note">This is your estimated cost after insurance, based on the price we have on file for this service. Your actual cost may differ.</p>
+
+                        <template if:true={calcCovered}>
+                            <p class="note">Your plan covers this visit in full, so you pay $0.</p>
+                        </template>
+                        <template if:true={calcOutOfNetwork}>
+                            <p class="note">This doctor is out-of-network, so no plan discount is applied and you may pay the full price.</p>
+                        </template>
+                        <template if:true={calcCopay}>
+                            <p class="note">Your plan charges a flat copay<span role="button" tabindex="0" aria-label="What is a copay?" data-text={tipCopayText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:#6B7280;font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span> for this visit.</p>
+                        </template>
+                        <template if:true={calcDeductible}>
+                            <p class="note">You pay the full price until your deductible<span role="button" tabindex="0" aria-label="What is a deductible?" data-text={tipDeductibleText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:#6B7280;font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span> is met, then a share of the cost (coinsurance<span role="button" tabindex="0" aria-label="What is coinsurance?" data-text={tipCoinsText} onmouseenter={handleTipOn} onmouseleave={handleTipOff} onfocus={handleTipOn} onblur={handleTipOff} onclick={handleTipToggle} onkeydown={handleTipKey} style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:5px;border-radius:50%;border:1.2px solid #8A8F98;color:#6B7280;font-size:9px;line-height:1;font-weight:700;font-style:normal;font-family:Georgia,serif;text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:middle;">i</span>).</p>
+                        </template>
+                        <template if:true={estimateResult.showDeductibleNote}>
+                            <p class="note" style="color:#16213e; font-weight:600; border-left:3px solid #e8a33d; padding-left:12px;">Assumes you haven't met your deductible yet. Your actual cost may be lower.</p>
+                        </template>
+                        <template if:true={estimateResult.extraNote}>
+                            <p class="note">{estimateResult.extraNote}</p>
+                        </template>
+                        <template if:true={estimateResult.feeOnly}>
+                            <p class="note" style="color:#16213e; border-left:3px solid #16213e; padding-left:12px;"><strong>This covers the doctor's fee only.</strong> Lab tests and any other tests are billed separately and are not included in this estimate.</p>
+                        </template>
+                    </template>
+
+
+                    <p class="note">Confirming sends a callback request to the office — no time slot is booked automatically. They'll call you to lock in a time.</p>
+
+                    <template if:true={errorMessage}>
+                        <p class="error-text">{errorMessage}</p>
+                    </template>
+
+                    <div class="btn-row">
+                        <button class="btn-primary" disabled={isSubmitting} onclick={handleConfirmBooking}>Confirm and request callback</button>
+                    </div>
+                </template>
+
+                <template if:true={isRequestedStep}>
+                    <div class="done-state">
+                        <p class="done-mark">✓</p>
+                        <h1 class="title">Thank you for submitting your request</h1>
+                        <p class="lede">Your callback request has been sent to {estimateResult.providerName}. They will call you to confirm a time.</p>
+                        <p class="note">Keep an eye on your phone or email over the next day or two.</p>
+                        <div class="btn-row">
+                            <button class="btn-ghost" onclick={handleStartOver}>Book another visit</button>
+                            <button class="btn-primary" onclick={handleGoHome}>Back to home</button>
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+        </div>
+        <c-app-footer></c-app-footer>
+    </div>
+
+    <template if:true={tipVisible}>
+        <div role="tooltip" style={tipBoxStyle}>{tipBoxText}</div>
+    </template>
+</template>

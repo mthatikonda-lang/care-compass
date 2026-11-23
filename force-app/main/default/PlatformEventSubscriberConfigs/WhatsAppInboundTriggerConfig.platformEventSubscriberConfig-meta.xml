@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PlatformEventSubscriberConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <batchSize>1</batchSize>
+    <masterLabel>WhatsAppInboundTriggerConfig</masterLabel>
+    <numPartitions>1</numPartitions>
+    <partitionKey>EventUuid</partitionKey>
+    <platformEventConsumer>WhatsAppInboundTrigger</platformEventConsumer>
+    <user>mthatikonda.115152548162@agentforce.com</user>
+</PlatformEventSubscriberConfig>

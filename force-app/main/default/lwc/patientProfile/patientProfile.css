@@ -1,0 +1,162 @@
+:host { display: block; }
+.pf-page { background: var(--cc-page-overlay, linear-gradient(transparent, transparent)), var(--cc-page, #F5F6FA) url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201600%20900%22%20preserveAspectRatio%3D%22xMidYMid%20slice%22%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23EAF1FB%22/%3E%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%23F5F6FA%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FBF5EC%22/%3E%3C/linearGradient%3E%0A%3CradialGradient%20id%3D%22a%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23E8A33D%22%20stop-opacity%3D%22.30%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E8A33D%22%20stop-opacity%3D%220%22/%3E%3C/radialGradient%3E%0A%3CradialGradient%20id%3D%22c%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%235B8DD6%22%20stop-opacity%3D%22.26%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%235B8DD6%22%20stop-opacity%3D%220%22/%3E%3C/radialGradient%3E%0A%3C/defs%3E%0A%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23b%29%22/%3E%0A%3Ccircle%20cx%3D%22140%22%20cy%3D%22760%22%20r%3D%22420%22%20fill%3D%22url%28%23a%29%22/%3E%0A%3Ccircle%20cx%3D%221500%22%20cy%3D%22260%22%20r%3D%22470%22%20fill%3D%22url%28%23c%29%22/%3E%0A%3Ccircle%20cx%3D%22820%22%20cy%3D%22900%22%20r%3D%22360%22%20fill%3D%22url%28%23c%29%22%20opacity%3D%22.6%22/%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%2324335C%22%20stroke-opacity%3D%22.10%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%3Cpath%20d%3D%22M-40%20640%20H330%20L390%20520%20L470%20760%20L550%20590%20L600%20640%20H1000%20L1060%20560%20L1130%20700%20L1190%20640%20H1660%22/%3E%0A%3Cpath%20d%3D%22M1130%20120%20L1410%20210%20V430%20C1410%20590%201290%20700%201130%20760%20C970%20700%20850%20590%20850%20430%20V210%20Z%22%20stroke-opacity%3D%22.08%22%20stroke-width%3D%223%22/%3E%0A%3Ccircle%20cx%3D%221130%22%20cy%3D%22420%22%20r%3D%22150%22%20stroke-opacity%3D%22.07%22/%3E%0A%3Ccircle%20cx%3D%221130%22%20cy%3D%22420%22%20r%3D%22230%22%20stroke-opacity%3D%22.05%22/%3E%0A%3C/g%3E%0A%3Cg%20stroke%3D%22%23E8A33D%22%20stroke-opacity%3D%22.30%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%3E%0A%3Cpath%20d%3D%22M170%20170v36M152%20188h36%22/%3E%3Cpath%20d%3D%22M1350%20700v36M1332%20718h36%22/%3E%3Cpath%20d%3D%22M640%20120v28M626%20134h28%22/%3E%3Cpath%20d%3D%22M420%20420v24M408%20432h24%22/%3E%3Cpath%20d%3D%22M1480%20520v28M1466%20534h28%22/%3E%0A%3C/g%3E%0A%3Cg%20fill%3D%22%2324335C%22%20fill-opacity%3D%22.10%22%3E%3Ccircle%20cx%3D%22260%22%20cy%3D%22330%22%20r%3D%226%22/%3E%3Ccircle%20cx%3D%22980%22%20cy%3D%22200%22%20r%3D%225%22/%3E%3Ccircle%20cx%3D%221240%22%20cy%3D%22560%22%20r%3D%227%22/%3E%3Ccircle%20cx%3D%22560%22%20cy%3D%22780%22%20r%3D%225%22/%3E%3Ccircle%20cx%3D%2290%22%20cy%3D%22520%22%20r%3D%224%22/%3E%3C/g%3E%0A%3C/svg%3E%0A') center / cover no-repeat fixed; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+.pf-head { display: flex; align-items: center; gap: 1.1rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.pf-avatar { width: 64px; height: 64px; border-radius: 50%; background: #E8A33D; color: #16213E; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 1.4rem; font-weight: 700; flex-shrink: 0; }
+.pf-head-text { flex: 1; min-width: 200px; }
+.pf-name { margin: 0 0 0.4rem; font-family: Georgia, "Times New Roman", serif; font-size: 2rem; color: #FBF8F3; }
+.pf-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pf-chip { background: rgba(255,255,255,0.14); color: #FBF8F3; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 999px; }
+.pf-body { position: relative; z-index: 1; max-width: 1100px; margin: -3.25rem auto 0; padding: 0 2rem 3rem; box-sizing: border-box; }
+.pf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.pf-card { display: flex; flex-direction: column; background: var(--cc-surface, #fff); border-radius: 20px; padding: 1.4rem 1.6rem; box-shadow: var(--cc-card-shadow, 0 10px 30px rgba(22,33,62,0.1)); }
+.pf-title { margin: 0 0 0.6rem; font-family: Georgia, serif; font-size: 1.15rem; color: var(--cc-ink, #16213E); }
+.pf-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.8rem 0; border-top: 1px solid var(--cc-border, #EFEAE0); font-size: 0.92rem; color: var(--cc-muted, #7B8190); }
+.pf-row b { color: var(--cc-ink, #16213E); text-align: right; overflow-wrap: anywhere; }
+.pf-state { background: var(--cc-surface, #fff); border-radius: 16px; padding: 1.2rem; color: var(--cc-ink, #16213E); }
+@media (max-width: 720px) { .pf-grid { grid-template-columns: 1fr; } .pf-body { padding: 0 1rem 2rem; } }
+.pf-btn { display: block; width: 100%; margin-top: auto; border: none; background: var(--cc-navy, #16213E); color: #fff; font-family: inherit; font-size: 0.9rem; font-weight: 600; padding: 0.7rem 1.4rem; border-radius: 999px; cursor: pointer; }
+.pf-row:last-of-type { margin-bottom: 1.2rem; }
+
+/* Page background image, and the shared footer pinned to the bottom */
+.pf-page {
+    display: flex;
+    flex-direction: column;
+}
+.pf-page > c-app-footer {
+    margin-top: auto;
+}
+.pf-body {
+    width: 100%;
+    box-sizing: border-box;
+}
+/* ---------- Motion ---------- */
+@keyframes pf-rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pf-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pf-pop {
+    0%   { opacity: 0; transform: scale(0.5); }
+    70%  { opacity: 1; transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+@keyframes pf-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Banner: avatar pops in, then the name and chips follow */
+.pf-avatar { animation: pf-pop 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s backwards; }
+.pf-name { animation: pf-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.2s backwards; }
+.pf-chip { animation: pf-fade-up 0.45s ease-out backwards; }
+.pf-chip:nth-child(1) { animation-delay: 0.32s; }
+.pf-chip:nth-child(2) { animation-delay: 0.40s; }
+.pf-chip:nth-child(3) { animation-delay: 0.48s; }
+.pf-chip:nth-child(n+4) { animation-delay: 0.56s; }
+
+/* Cards rise one after another, and lift on hover.
+   "backwards" (not "both") so the hover lift works after the entrance ends. */
+.pf-card, .pf-state {
+    animation: pf-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.pf-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--cc-card-shadow-hover, 0 16px 34px rgba(22, 33, 62, 0.15));
+}
+.pf-grid > .pf-card:nth-child(1) { animation-delay: 0.15s; }
+.pf-grid > .pf-card:nth-child(2) { animation-delay: 0.27s; }
+.pf-grid > .pf-card:nth-child(3) { animation-delay: 0.39s; }
+.pf-grid > .pf-card:nth-child(4) { animation-delay: 0.51s; }
+.pf-grid > .pf-card:nth-child(n+5) { animation-delay: 0.63s; }
+
+/* Rows inside each card fade in after the card appears */
+.pf-row { animation: pf-fade 0.4s ease-out backwards; }
+.pf-row:nth-of-type(1) { animation-delay: 0.45s; }
+.pf-row:nth-of-type(2) { animation-delay: 0.52s; }
+.pf-row:nth-of-type(3) { animation-delay: 0.59s; }
+.pf-row:nth-of-type(4) { animation-delay: 0.66s; }
+.pf-row:nth-of-type(n+5) { animation-delay: 0.73s; }
+
+/* Buttons */
+.pf-btn { transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; }
+.pf-btn:hover { background: var(--cc-navy-2, #24335C); transform: translateY(-1px); box-shadow: 0 8px 18px rgba(22, 33, 62, 0.25); }
+.pf-btn:active { transform: translateY(0); box-shadow: none; }
+.pf-btn:focus-visible { outline: 3px solid #E8A33D; outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .pf-avatar, .pf-name, .pf-chip, .pf-card, .pf-state, .pf-row { animation: none; }
+    .pf-card, .pf-state, .pf-btn { transition: none; }
+    .pf-card:hover, .pf-btn:hover { transform: none; }
+}
+
+/* =====================================================
+   My profile: premium glass cards
+   ===================================================== */
+.pf-avatar {
+    box-shadow: 0 0 25px rgba(229, 169, 60, 0.35);
+}
+.pf-name {
+    font-size: 2.25rem;
+    letter-spacing: -0.5px;
+}
+.pf-chip {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-weight: 500;
+}
+
+.pf-grid { gap: 2rem; }
+
+.pf-card {
+    padding: 2.25rem 2.5rem;
+    border-radius: 24px;
+    background: var(--cc-glass-bg, #FFFFFF);
+    -webkit-backdrop-filter: var(--cc-glass-blur, none);
+    backdrop-filter: var(--cc-glass-blur, none);
+    border: 1px solid var(--cc-border, #E7E1D4);
+    box-shadow: var(--cc-card-shadow, 0 25px 50px -12px rgba(22, 33, 62, 0.16));
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    border-top-color: var(--cc-edge-top, #E7E1D4);
+    border-left-color: var(--cc-edge-left, #E7E1D4);
+}
+.pf-card:hover {
+    border-color: var(--cc-border-hover, #E6D6B3);
+}
+
+.pf-title {
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--cc-border, #EFEAE0);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.pf-row {
+    align-items: center;
+    padding: 0.7rem 0;
+    border-top: none;
+}
+.pf-row b { font-weight: 600; }
+
+/* Buttons: deep navy pill, gold fill on hover */
+.pf-btn {
+    padding: 0.85rem 1.5rem;
+    background: #0E1726;
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.pf-btn:hover {
+    background: #E8A33D;
+    border-color: #E8A33D;
+    color: #0F192E;
+    box-shadow: 0 8px 25px rgba(229, 169, 60, 0.3);
+}
+
+@media (max-width: 720px) {
+    .pf-card { padding: 1.6rem 1.4rem; }
+    .pf-name { font-size: 1.8rem; }
+}

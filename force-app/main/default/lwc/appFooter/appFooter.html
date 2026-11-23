@@ -1,0 +1,57 @@
+<template>
+    <footer class="af-footer">
+        <div class="af-top">
+            <div class="af-inner">
+                <div class="af-cols">
+                    <div class="af-brand-col">
+                        <div class="af-brand"><svg viewBox="0 0 40 46" width="26" height="30" aria-hidden="true"><path d="M20 2 L37 8 V23 C37 33 30 40 20 44 C10 40 3 33 3 23 V8 Z" fill="#24335C" stroke="#E8A33D" stroke-width="2"/><path d="M7 24 H14 L17 15 L22 32 L26 21 L28 24 H33" fill="none" stroke="#E8A33D" stroke-width="2.4"/></svg><span class="af-name">Care Compass</span></div>
+                        <p class="af-tag">Healthcare costs, made clear. Check bills and find in-network doctors in minutes.</p>
+                    </div>
+                    <div class="af-col">
+                        <p class="af-head">Care Compass</p>
+                        <a class="af-link" href={homeHref} data-gate="Home" data-target={homeUrl} onclick={handleGated}>Home</a>
+                        <a class="af-link" href={aboutHref} data-gate="About us" data-target={aboutUrl} onclick={handleGated}>About us</a>
+                        <a class="af-link" href={howHref} data-gate="How estimates work" data-target={howUrl} onclick={handleGated}>How estimates work</a>
+                        <a class="af-link" href={helpHref} data-gate="Help" data-target={helpUrl} onclick={handleGated}>Help</a>
+                        <a class="af-link" href={contactHref} data-gate="Contact us" data-target={contactUrl} onclick={handleGated}>Contact us</a>
+                    </div>
+                    <div class="af-col">
+                        <p class="af-head">For patients</p>
+                        <a class="af-link" href={findCareHref} data-gate="Find care" data-target={findCareUrl} onclick={handleGated}>Find care</a>
+                        <a class="af-link" href={checkBillHref} data-gate="Check a bill" data-target={checkBillUrl} onclick={handleGated}>Check a bill</a>
+                        <a class="af-link" href={dashboardHref} data-gate="My dashboard" data-target={dashboardUrl} onclick={handleGated}>My dashboard</a>
+                        <a class="af-link" href={profileHref} data-gate="My profile" data-target={profileUrl} onclick={handleGated}>My profile</a>
+                    </div>
+                    <div class="af-col">
+                        <p class="af-head">Contact</p>
+                        <p class="af-text">contact@carecompass.example.com</p>
+                        <p class="af-text">(518) 555-0142</p>
+                        <p class="af-text">123 Coverage Lane, Albany, NY 12207</p>
+                    </div>
+                </div>
+                <p class="af-legal">Estimates are for information only and are not medical, legal or financial advice. Your insurer's decision on a claim is final. Care Compass does not provide medical care. Always contact your healthcare provider directly with questions about your health. &copy; 2026 Care Compass. All rights reserved.</p>
+                <div class="af-legal-links">
+                    <a class="af-link" href={termsHref} data-gate="Terms" data-target={termsUrl} onclick={handleGated}>Terms</a>
+                    <a class="af-link" href={privacyHref} data-gate="Privacy" data-target={privacyUrl} onclick={handleGated}>Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <template if:true={gateOpen}>
+        <div class="af-gate-backdrop" onclick={handleBackdrop}>
+            <div class="af-gate" role="dialog" aria-modal="true" aria-labelledby="af-gate-title">
+                <button type="button" class="af-gate-x" aria-label="Close" onclick={closeGate}>&times;</button>
+                <div class="af-gate-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                </div>
+                <h2 id="af-gate-title" class="af-gate-title">Log in to continue</h2>
+                <p class="af-gate-text">Create a free account or log in to use <strong>{gateLabel}</strong>.</p>
+                <div class="af-gate-actions">
+                    <button type="button" class="af-gate-btn af-gate-primary" onclick={goLogin}>Log in</button>
+                    <button type="button" class="af-gate-btn af-gate-ghost" onclick={goSignup}>Create a free account</button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Billed_Amount__c</fullName>
+    <label>Total Billed Amount</label>
+    <summarizedField>Charge__c.Billed_Amount__c</summarizedField>
+    <summaryForeignKey>Charge__c.Bill__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

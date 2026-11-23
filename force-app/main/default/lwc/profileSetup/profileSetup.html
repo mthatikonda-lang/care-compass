@@ -1,0 +1,67 @@
+<template>
+    <div class="ps-page">
+        <c-app-nav hide-menu={hideNav} active="profile" heading={pageHeading} subtitle={pageSubtitle}></c-app-nav>
+
+        <div class="ps-body">
+            <div class="ps-card">
+
+                <template if:true={errorMessage}>
+                    <p class="error-text">{errorMessage}</p>
+                </template>
+
+                <template if:true={isLoading}>
+                    <p class="loading">Loading…</p>
+                </template>
+
+                <template if:false={isLoading}>
+                    <div class="form-fields">
+                        <lightning-input
+                            type="date"
+                            label="Date of Birth"
+                            value={dateOfBirth}
+                            max={maxDob}
+                            onchange={handleDobChange}
+                            required>
+                        </lightning-input>
+
+                        <lightning-combobox
+                            label="Gender"
+                            placeholder="Please select"
+                            value={gender}
+                            options={genderOptions}
+                            onchange={handleGenderChange}
+                            required>
+                        </lightning-combobox>
+
+                        <lightning-input
+                            type="tel"
+                            label="Phone Number"
+                            value={phone}
+                            onchange={handlePhoneChange}
+                            field-level-help="10 digits, optionally with +1 or +91 first, for example 4015551234 or +91 9876543210."
+                            required>
+                        </lightning-input>
+                    </div>
+
+                    <template if:true={confirmingChange}>
+                        <div style="background:#FFF4DC;border:1px solid #E8A33D;border-radius:8px;padding:12px 14px;margin:12px 0;color:#2B3340;font-size:14px;line-height:1.4;">
+                            <p>{dobChangeMessage}</p>
+                            <lightning-button variant="neutral" label="Keep editing" onclick={handleCancelChange}></lightning-button>
+                            <lightning-button variant="brand" label="Yes, save change" onclick={handleConfirmChange} class="slds-m-left_small"></lightning-button>
+                        </div>
+                    </template>
+
+                    <template if:false={confirmingChange}>
+                    <lightning-button
+                        variant="brand"
+                        label={submitLabel}
+                        onclick={handleSave}
+                        disabled={isSubmitting}
+                        class="submit-button">
+                    </lightning-button>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

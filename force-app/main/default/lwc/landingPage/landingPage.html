@@ -1,0 +1,361 @@
+<template>
+    <div class="lp">
+        <!-- Ambient background for the whole page -->
+        <div class="lp-ambient" aria-hidden="true">
+            <span class="lp-glow lp-glow-a"></span>
+            <span class="lp-glow lp-glow-b"></span>
+            <span class="lp-grid"></span>
+            <svg class="lp-ecg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path class="lp-ecg-glow" d="M0 60 H300 L340 60 L370 20 L410 100 L445 38 L470 60 H760 L800 60 L830 24 L870 96 L905 42 L930 60 H1200"></path>
+                <path class="lp-ecg-line" d="M0 60 H300 L340 60 L370 20 L410 100 L445 38 L470 60 H760 L800 60 L830 24 L870 96 L905 42 L930 60 H1200"></path>
+            </svg>
+            <span class="lp-plus lp-plus-1"></span>
+            <span class="lp-plus lp-plus-2"></span>
+            <span class="lp-plus lp-plus-3"></span>
+            <span class="lp-plus lp-plus-4"></span>
+        </div>
+
+        <div class="lp-content">
+            <!-- Top bar -->
+            <header class="lp-top">
+                <button class="lp-brand" onclick={scrollTop} aria-label="Care Compass home">
+                    <span class="lp-logo">
+                        <svg viewBox="0 0 40 46" width="34" height="39" aria-hidden="true">
+                            <g class="lp-logo-g">
+                                <path class="lp-logo-shield" pathLength="100" d="M20 2 L37 8 V23 C37 33 30 40 20 44 C10 40 3 33 3 23 V8 Z" fill="#24335C" stroke="#E8A33D" stroke-width="2" stroke-linejoin="round"></path>
+                                <path class="lp-logo-ecg" pathLength="100" d="M7 24 H14 L17 15 L22 32 L26 21 L28 24 H33" fill="none" stroke="#E8A33D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path class="lp-logo-pulse" pathLength="100" d="M7 24 H14 L17 15 L22 32 L26 21 L28 24 H33" fill="none" stroke="#FFF1CF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </g>
+                        </svg>
+                    </span>
+                    <span class="lp-brand-name">Care Compass</span>
+                </button>
+                <nav class="lp-links" aria-label="Page sections">
+                    <button class="lp-link" data-target="features" onclick={scrollToSection}>What it does</button>
+                    <button class="lp-link" data-target="how" onclick={scrollToSection}>How it works</button>
+                    <button class="lp-link" data-target="about" onclick={scrollToSection}>About</button>
+                    <button class="lp-link" data-target="demo" onclick={scrollToSection}>Demo</button>
+                    <button class="lp-link" data-target="faq" onclick={scrollToSection}>Good to know</button>
+                    <button class="lp-link" data-target="contact" onclick={scrollToSection}>Contact</button>
+                </nav>
+                <div class="lp-actions">
+                    <button class="lp-btn lp-btn-glass" onclick={showLogin}>Log in</button>
+                    <button class="lp-btn lp-btn-gold lp-hide-sm" onclick={showSignup}>Create an account</button>
+                </div>
+            </header>
+
+            <!-- Hero -->
+            <section class="lp-hero">
+                <div class="lp-hero-text">
+                    <p class="lp-badge lp-in"><span class="lp-dot"></span>Find Care and costs, made clear</p>
+                    <h1 class="lp-h1 lp-in lp-d1">Find the right doctor.<br><em>Know what you owe.</em></h1>
+                    <p class="lp-lead lp-in lp-d2">Care Compass helps you find a doctor, see your estimated cost, and request an appointment. Already have a medical bill? It checks every charge against your own insurance plan, so you can see what insurance should pay, what you owe, and what looks too high.</p>
+                    <div class="lp-cta lp-in lp-d3">
+                        <button class="lp-btn lp-btn-gold lp-btn-lg" onclick={showSignup}>Create a free account <span aria-hidden="true">&rarr;</span></button>
+                        <button class="lp-btn lp-btn-glass lp-btn-lg" onclick={showLogin}>Log in</button>
+                    </div>
+                    <p class="lp-fine lp-in lp-d4">Estimates are based on your plan's published rules. They are not a final bill.</p>
+                </div>
+
+                <div class="lp-stage">
+                    <div class="lp-sample lp-in lp-d2" aria-label="Example of a bill breakdown">
+                        <span class="lp-scan" aria-hidden="true"></span>
+                        <p class="lp-sample-tag">Example only</p>
+                        <p class="lp-sample-label">You may owe</p>
+                        <p class="lp-sample-amount">{amountText}</p>
+                        <div class="lp-sample-bar" aria-hidden="true"><span class="lp-bar-cov"></span><span class="lp-bar-owe"></span></div>
+                        <ul class="lp-sample-list">
+                            <li><span>Office visit</span><b class="lp-chip">Covered</b></li>
+                            <li><span>Lab panel</span><b>$40</b></li>
+                            <li class="lp-flag"><span>Imaging <em>priced above typical rate</em></span><b>$200</b></li>
+                        </ul>
+                        <p class="lp-sample-note">Made-up numbers to show how a breakdown looks.</p>
+                    </div>
+                    <div class="lp-float lp-float-doc lp-in lp-d4" aria-hidden="true">
+                        <span class="lp-float-ico lp-ico-ok">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                        </span>
+                        <span class="lp-float-txt"><b>In network</b><small>Example doctor &middot; est. $40</small></span>
+                    </div>
+                    <div class="lp-float lp-float-warn lp-in lp-d5" aria-hidden="true">
+                        <span class="lp-float-ico lp-ico-warn">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+                        </span>
+                        <span class="lp-float-txt"><b>1 charge flagged</b><small>Letter ready to send</small></span>
+                    </div>
+                    <div class="lp-float lp-float-shield lp-in lp-d5" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M8 12h2l1.5-3 2 6 1.5-3H16"></path></svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="lp-section" data-anchor="features">
+                <div class="lp-head lp-reveal">
+                    <p class="lp-kicker">Features</p>
+                    <h2 class="lp-h2">Clear answers for every step of care</h2>
+                    <p class="lp-sub">No surprise bills. No confusing insurance jargon.</p>
+                </div>
+                <div class="lp-cards">
+                    <article class="lp-glass lp-card lp-reveal" onmousemove={trackMouse}>
+                        <div class="lp-viz lp-viz-search" aria-hidden="true">
+                            <div class="lp-vs-bar">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+                                <span class="lp-type">my knee hurts</span><i class="lp-caret"></i>
+                            </div>
+                            <div class="lp-vs-row lp-vs-r1"><span class="lp-vs-dot"></span><b>Orthopedic doctor</b><em>In network</em></div>
+                            <div class="lp-vs-row lp-vs-r2"><span class="lp-vs-dot"></span><b>Sports medicine</b><em>Est. $40</em></div>
+                        </div>
+                        <h3>Find the right doctor</h3>
+                        <p>Describe what is wrong, see matched doctors, their network status and an estimated cost, then request an appointment.</p>
+                    </article>
+                    <article class="lp-glass lp-card lp-reveal" onmousemove={trackMouse}>
+                        <div class="lp-viz lp-viz-bill" aria-hidden="true">
+                            <span class="lp-vb-scan"></span>
+                            <div class="lp-vb-row lp-vb-1"><span>Office visit</span><i class="lp-vb-ok">&#10003;</i></div>
+                            <div class="lp-vb-row lp-vb-2"><span>Lab panel</span><i class="lp-vb-ok">&#10003;</i></div>
+                            <div class="lp-vb-row lp-vb-3"><span>Imaging</span><i class="lp-vb-ok">&#10003;</i></div>
+                            <div class="lp-vb-total"><span>You may owe</span><b>$240</b></div>
+                        </div>
+                        <h3>Check a bill</h3>
+                        <p>Paste or upload an itemized bill and get a charge-by-charge breakdown in plain language.</p>
+                    </article>
+                    <article class="lp-glass lp-card lp-reveal" onmousemove={trackMouse}>
+                        <div class="lp-viz lp-viz-flag" aria-hidden="true">
+                            <div class="lp-vf-line"><span>Imaging</span><b>$200</b><i class="lp-vf-alert">!</i></div>
+                            <div class="lp-vf-note">priced above typical rate</div>
+                            <div class="lp-vf-letter">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+                                <span>Letter ready to send</span>
+                            </div>
+                        </div>
+                        <h3>Question a charge</h3>
+                        <p>Charges priced above the typical rate are flagged, with a ready-to-send letter and a phone script.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- How it works -->
+            <section class="lp-section" data-anchor="how">
+                <div class="lp-head lp-reveal">
+                    <p class="lp-kicker">Simple process</p>
+                    <h2 class="lp-h2">How Care Compass works</h2>
+                </div>
+                <div class="lp-cards lp-steps-row">
+                    <article class="lp-glass lp-step lp-reveal" onmousemove={trackMouse}>
+                        <div class="lp-step-head"><h3>Create your account</h3><span class="lp-step-n">01</span></div>
+                        <div class="lp-viz lp-viz-signup" aria-hidden="true">
+                            <div class="lp-su-field lp-su-1"><small>Name</small><span class="lp-su-type">Jane Doe</span></div>
+                            <div class="lp-su-field lp-su-2"><small>Insurance plan</small><span class="lp-su-plan">Your plan<i>&#10003;</i></span></div>
+                            <div class="lp-su-btn">Create account</div>
+                        </div>
+                        <p>Sign up and tell us your insurance plan. It takes less than a minute.</p>
+                    </article>
+                    <article class="lp-glass lp-step lp-reveal" onmousemove={trackMouse}>
+                        <div class="lp-step-head"><h3>Find care or add a bill</h3><span class="lp-step-n">02</span></div>
+                        <div class="lp-viz lp-viz-choose" aria-hidden="true">
+                            <div class="lp-ch-tabs"><span class="lp-ch-a">Find a doctor</span><span class="lp-ch-b">Check a bill</span></div>
+                            <div class="lp-ch-panel lp-ch-pa">
+                                <div class="lp-ch-line"><span class="lp-vs-dot"></span><b>Dr. match</b><em>In network</em></div>
+                                <div class="lp-ch-line"><span class="lp-vs-dot lp-dot-gold"></span><b>Est. cost</b><em>$40</em></div>
+                            </div>
+                            <div class="lp-ch-panel lp-ch-pb">
+                                <div class="lp-ch-line"><b>Lab panel</b><em>$40</em></div>
+                                <div class="lp-ch-line"><b>Imaging</b><em class="lp-warn">$200</em></div>
+                            </div>
+                        </div>
+                        <p>Look for a doctor and see an estimated cost, or paste in a bill you already have.</p>
+                    </article>
+                    <article class="lp-glass lp-step lp-reveal" onmousemove={trackMouse}>
+                        <div class="lp-step-head"><h3>See where you stand</h3><span class="lp-step-n">03</span></div>
+                        <div class="lp-viz lp-viz-ring" aria-hidden="true">
+                            <svg class="lp-ring" viewBox="0 0 100 100" width="104" height="104">
+                                <circle class="lp-ring-bg" cx="50" cy="50" r="38"></circle>
+                                <circle class="lp-ring-owe" cx="50" cy="50" r="38"></circle>
+                                <circle class="lp-ring-pay" cx="50" cy="50" r="38"></circle>
+                            </svg>
+                            <div class="lp-ring-legend">
+                                <span><i class="lp-lg-pay"></i>Insurance pays</span>
+                                <span><i class="lp-lg-owe"></i>You owe</span>
+                                <span class="lp-lg-flag"><i class="lp-lg-alert">!</i>1 charge high</span>
+                            </div>
+                        </div>
+                        <p>Read what insurance should pay, what you owe, and which charges look too high.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- About -->
+            <section class="lp-section lp-narrow" data-anchor="about">
+                <div class="lp-head lp-reveal">
+                    <p class="lp-kicker">About</p>
+                    <h2 class="lp-h2">Healthcare costs, made clear</h2>
+                    <p class="lp-sub">Find the right doctor, see what a visit may cost with your plan before you book, and check any bill you have, whenever you get it. Care Compass puts it all in one place, in plain language.</p>
+                </div>
+                <div class="lp-mv">
+                    <article class="lp-glass lp-mv-card lp-reveal" onmousemove={trackMouse}>
+                        <p class="lp-mv-label">Our mission</p>
+                        <p class="lp-mv-text">To help patients find the right doctor, see what a visit is likely to cost with their insurance, and check a bill against their coverage, so they know what to expect before they pay.</p>
+                    </article>
+                    <article class="lp-glass lp-mv-card lp-reveal" onmousemove={trackMouse}>
+                        <p class="lp-mv-label">Our vision</p>
+                        <p class="lp-mv-text">A healthcare experience where no one is surprised by a medical bill.</p>
+                    </article>
+                </div>
+                <!--<p class="lp-about-note lp-reveal">Figures are estimates. Your insurer and provider set the final amount. <a class="lp-about-link" href="/coveragechecker/about">Read more about us</a></p>-->
+            </section>
+
+            <!-- Demo -->
+            <section class="lp-section" data-anchor="demo">
+                <div class="lp-head lp-reveal">
+                    <p class="lp-kicker">Demo</p>
+                    <h2 class="lp-h2">See Care Compass in action</h2>
+                </div>
+                <div class="lp-demo">
+                    <div class="lp-demo-text lp-reveal">
+                        <p class="lp-demo-lead">Describe what is wrong and Care Compass matches you with in-network doctors and shows what a visit may cost with your plan. The example on the right uses made-up data.</p>
+                        <ul class="lp-demo-list lp-demo-list-last">
+                            <li><span class="lp-demo-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span>Describe your symptoms in plain words</span></li>
+                            <li><span class="lp-demo-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"></path></svg></span><span>See in-network doctors matched to you</span></li>
+                            <li><span class="lp-demo-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6H9.5a3 3 0 0 0 0 6h5a3 3 0 0 1 0 6H6"></path></svg></span><span>Get an estimated cost before you book</span></li>
+                            <li><span class="lp-demo-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M9 14h6M9 18h4"></path></svg></span><span>Check a bill charge by charge, whenever you have one</span></li>
+                        </ul>
+                    </div>
+                    <div class="lp-demo-win lp-reveal" role="img" aria-label="Example of finding a doctor and seeing an estimated cost">
+                        <div class="lp-demo-bar" aria-hidden="true"><span class="lp-demo-dots"><i></i><i></i><i></i></span><span class="lp-demo-title">Care Compass &middot; Find care</span><span class="lp-demo-tag">Example</span></div>
+                        <div class="lp-demo-body" aria-hidden="true">
+                            <p class="lp-dm-label">What do you need help with?</p>
+                            <div class="lp-dm-search">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+                                <span class="lp-dm-type">my knee hurts when I climb stairs</span><i class="lp-caret"></i>
+                            </div>
+                            <p class="lp-dm-label lp-dm-res-label">Matched doctors &middot; with your plan</p>
+                            <div class="lp-dm-card lp-dm-c1">
+                                <div class="lp-dm-info"><b>Dr. A. Rivera</b><small>Orthopedic doctor</small></div>
+                                <span class="lp-dm-net">In network</span>
+                                <span class="lp-dm-cost"><small>Est. you pay</small><b>$40</b></span>
+                            </div>
+                            <div class="lp-dm-card lp-dm-c2">
+                                <div class="lp-dm-info"><b>Dr. M. Chen</b><small>Sports medicine</small></div>
+                                <span class="lp-dm-net">In network</span>
+                                <span class="lp-dm-cost"><small>Est. you pay</small><b>$60</b></span>
+                            </div>
+                            <div class="lp-dm-book">Request appointment</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Good to know -->
+            <section class="lp-section lp-narrow" data-anchor="faq">
+                <div class="lp-head lp-reveal">
+                    <p class="lp-kicker">Transparency</p>
+                    <h2 class="lp-h2">Good to know</h2>
+                </div>
+                <details class="lp-glass lp-faq lp-reveal" onmousemove={trackMouse}>
+                    <summary><span class="lp-faq-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></span><span class="lp-faq-q">Are the estimates final bills?</span><i aria-hidden="true"></i></summary>
+                    <p>No. Estimates use your plan's published rules. Only your insurer and the provider's billing office can confirm the final amount.</p>
+                </details>
+                <details class="lp-glass lp-faq lp-reveal" onmousemove={trackMouse}>
+                    <summary><span class="lp-faq-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"></path></svg></span><span class="lp-faq-q">Is this medical advice?</span><i aria-hidden="true"></i></summary>
+                    <p>No. Care Compass does not diagnose or tell you whether you need treatment. If this is an emergency, call 911.</p>
+                </details>
+                <details class="lp-glass lp-faq lp-reveal" onmousemove={trackMouse}>
+                    <summary><span class="lp-faq-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="8" r="4"></circle><path d="M3 20c0-3.5 3-6 7-6M18 8v6M15 11h6"></path></svg></span><span class="lp-faq-q">What do I need to get started?</span><i aria-hidden="true"></i></summary>
+                    <p>A free account and your insurance plan. If you do not have insurance, you can say so during setup and still get estimates as a self-pay patient.</p>
+                </details>
+                <details class="lp-glass lp-faq lp-reveal" onmousemove={trackMouse}>
+                    <summary><span class="lp-faq-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M9 14h6M9 18h4"></path></svg></span><span class="lp-faq-q">Can I check a bill I already have?</span><i aria-hidden="true"></i></summary>
+                    <p>Yes. Paste or upload an itemized bill and each charge is compared with your plan and the typical rate.</p>
+                </details>
+            </section>
+
+            <!-- Final call to action -->
+            <section class="lp-final">
+                <div class="lp-glass lp-final-card lp-reveal">
+                    <h2 class="lp-h2">Know what you owe, before you pay.</h2>
+                    <div class="lp-cta lp-cta-center">
+                        <button class="lp-btn lp-btn-gold lp-btn-lg" onclick={showSignup}>Create a free account <span aria-hidden="true">&rarr;</span></button>
+                        <button class="lp-btn lp-btn-glass lp-btn-lg" onclick={showLogin}>Log in</button>
+                    </div>
+                </div>
+            </section>
+
+            <c-app-footer data-anchor="contact" onauthrequest={handleAuthRequest}></c-app-footer>
+        </div>
+        <!-- Log in / create account popup -->
+        <template if:true={isModalOpen}>
+            <div class="lp-modal" onclick={handleBackdrop}>
+                    <div class="lp-auth" role="dialog" aria-modal="true" aria-label="Log in or create an account">
+                        <button class="lp-close" type="button" onclick={closeModal} aria-label="Close">&times;</button>
+                    <div class="lp-tabs" role="tablist">
+                        <button class={loginTabClass} role="tab" aria-selected={isLogin} onclick={showLogin}>Log in</button>
+                        <button class={signupTabClass} role="tab" aria-selected={isSignup} onclick={showSignup}>Create account</button>
+                    </div>
+
+                    <!-- LOG IN -->
+                    <template if:true={isLogin}>
+                        <div class="lp-pane" role="tabpanel">
+                            <h2 class="lp-auth-title">Welcome back</h2>
+                            <p class="lp-auth-sub">Log in to check bills and find care.</p>
+                            <template if:true={loginError}>
+                                <p class="lp-msg lp-error" role="alert">{loginError}</p>
+                            </template>
+                            <template if:true={infoMessage}>
+                                <p class="lp-msg lp-info" role="status">{infoMessage}</p>
+                            </template>
+                            <label class="lp-label" for="lp-user">Username</label>
+                            <input id="lp-user" class="lp-input" type="text" autocomplete="username" value={username} onchange={handleUsername} onkeyup={handleLoginKey} />
+                            <label class="lp-label" for="lp-pass">Password</label>
+                            <div class="lp-pass">
+                                <input id="lp-pass" class="lp-input" type={passwordType} autocomplete="current-password" value={password} onchange={handlePassword} onkeyup={handleLoginKey} />
+                                <button class="lp-show" type="button" onclick={toggleShow}>{toggleLabel}</button>
+                            </div>
+                            <button class="lp-submit" onclick={handleLogin} disabled={isLoggingIn}>{loginLabel}</button>
+                            <div class="lp-auth-links">
+                                <button class="lp-textlink" type="button" onclick={handleForgot}>Forgot your password?</button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- CREATE ACCOUNT -->
+                    <template if:true={isSignup}>
+                        <div class="lp-pane lp-reg" role="tabpanel">
+                            <h2 class="lp-auth-title">Create your account</h2>
+                            <p class="lp-auth-sub">Register to check your medical bills against your coverage.</p>
+                            <template if:true={regError}>
+                                <p class="lp-msg lp-error" role="alert">{regError}</p>
+                            </template>
+                            <template if:true={isSubmitted}>
+                                <p class="lp-msg lp-info" role="status">{regSuccess}</p>
+                            </template>
+                            <template if:false={isSubmitted}>
+                                <div class="lp-form-grid">
+                                    <lightning-input label="First Name" value={firstName} onchange={handleFirstName} required></lightning-input>
+                                    <lightning-input label="Last Name" value={lastName} onchange={handleLastName} required></lightning-input>
+                                    <lightning-input type="email" label="Email" value={email} onchange={handleEmail} required></lightning-input>
+                                    <div class="lp-password-field">
+                                        <lightning-input type="password" label="Password" value={regPassword} onchange={handleRegPassword} required></lightning-input>
+                                        <template if:true={hasPasswordChecks}>
+                                            <ul class="lp-pw-list" aria-live="polite">
+                                                <template for:each={passwordChecks} for:item="rule">
+                                                    <li key={rule.key} class={rule.cssClass}>{rule.icon} {rule.text}</li>
+                                                </template>
+                                            </ul>
+                                        </template>
+                                    </div>
+                                    <lightning-input type="date" label="Date of Birth" value={dob} max={maxDob} onchange={handleDob} required></lightning-input>
+                                    <lightning-combobox label="Gender" value={gender} options={genderOptions} onchange={handleGender} required></lightning-combobox>
+                                    <lightning-input type="tel" label="Mobile Number" value={phone} onchange={handlePhone}
+                                        field-level-help="10 digits, optionally with +1 or +91 first, for example 4015551234 or +91 9876543210." required></lightning-input>
+                                </div>
+                                <button class="lp-submit" onclick={handleSubmit} disabled={isSubmitting}>{submitLabel}</button>
+                            </template>
+                            <p class="lp-have">Already have an account? <button type="button" class="lp-textlink" onclick={showLogin}>Log in</button></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,97 @@
+<template>
+    <div class="home-container">
+        <template if:true={patient}>
+            <div class="top-bar">
+                <div class="profile-menu">
+                    <button class="profile-avatar" onclick={toggleProfileMenu}>{initials}</button>
+                    <template if:true={isProfileMenuOpen}>
+                        <div class="profile-dropdown">
+                            <p class="profile-dropdown-name">{patient.First_Name__c} {patient.Last_Name__c}</p>
+                            <p class="profile-dropdown-email">{patient.Email__c}</p>
+
+                            <hr class="profile-dropdown-divider" />
+
+                            <!-- NEW: My Dashboard link -->
+                            <button class="profile-dropdown-link" onclick={goToDashboard}>My Dashboard</button>
+                            <hr class="profile-dropdown-divider" />
+
+                            <template if:true={patient.Insurance_Plan__c}>
+                                <template if:true={patient.Insurance_Plan__r}>
+                                    <p class="profile-dropdown-label">Insurance</p>
+                                    <p class="profile-dropdown-value">{patient.Insurance_Plan__r.Insurance_Carrier__c} — {patient.Insurance_Plan__r.Name}</p>
+                                </template>
+                                <p class="profile-dropdown-label">Subscriber ID</p>
+                                <p class="profile-dropdown-value">{patient.Subscriber_ID__c}</p>
+                            </template>
+                            <template if:false={patient.Insurance_Plan__c}>
+                                <p class="profile-dropdown-label">Insurance</p>
+                                <p class="profile-dropdown-value">No plan on file</p>
+                            </template>
+
+                            <button class="profile-dropdown-link" onclick={goToInsuranceSetup}>Update Insurance Info</button>
+
+                            <hr class="profile-dropdown-divider" />
+
+                            <button class="profile-dropdown-logout" onclick={handleLogout}>Log Out</button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="welcome-banner">
+                <h1>Welcome back, {patient.First_Name__c}!</h1>
+                <p class="subtitle">Here's your Coverage Checker dashboard.</p>
+            </div>
+
+            <div class="dashboard-columns">
+                <div class="getting-started">
+                    <h3>Getting Started</h3>
+                    <div class="step-item">
+                        <span class="step-number">1</span>
+                        <div>
+                            <p class="step-title">Check a bill you've received</p>
+                            <p class="step-desc">Paste in the charges and we'll tell you what you actually owe based on your plan.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">2</span>
+                        <div>
+                            <p class="step-title">Need to see a doctor?</p>
+                            <p class="step-desc">Describe what's going on and we'll match you to an in-network provider nearby.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">3</span>
+                        <div>
+                            <p class="step-title">Keep your info up to date</p>
+                            <p class="step-desc">Update your insurance details anytime from your profile if your plan changes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-stack">
+                    <div class="nav-card" onclick={goToCoverageChecker}>
+                        <div class="card-icon">🧾</div>
+                        <h2>Check a Bill</h2>
+                        <p>See how a medical bill compares to your insurance coverage.</p>
+                    </div>
+
+                    <div class="nav-card" onclick={goToBookAppointment}>
+                        <div class="card-icon">🩺</div>
+                        <h2>Find a Doctor</h2>
+                        <p>Search for in-network providers and request an appointment.</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template if:false={patient}>
+            <template if:true={isLoading}>
+                <p class="loading">Loading your dashboard…</p>
+            </template>
+            <template if:false={isLoading}>
+                <p class="error">We couldn't find your patient profile. Please contact support.</p>
+            </template>
+        </template>
+    </div>
+</template>

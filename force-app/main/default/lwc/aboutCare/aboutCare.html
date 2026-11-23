@@ -1,0 +1,55 @@
+<template>
+    <div class="page">
+        <c-app-nav active="about" heading="Healthcare costs, made clear" subtitle="Care Compass helps patients understand what care will cost, before and after the visit."></c-app-nav>
+
+        <div class="body">
+            <section class="card">
+                <h2 class="card-title serif">Who we are</h2>
+                <p class="text">Care Compass is a patient-first tool that brings your insurance plan, your doctors and your bills into one place, so you can see what you are likely to owe in plain language.</p>
+            </section>
+
+            <div class="mv">
+                <section class="card mv-card">
+                    <p class="mv-label">Our mission</p>
+                    <p class="mv-text serif">To help patients find the right doctor, see what a visit is likely to cost with their insurance, and check a bill against their coverage, so they know what to expect before they pay.</p>
+                </section>
+                <section class="card mv-card">
+                    <p class="mv-label">Our vision</p>
+                    <p class="mv-text serif">A healthcare experience where no one is surprised by a medical bill.</p>
+                </section>
+            </div>
+
+            <div class="three">
+                <section class="card card-small">
+                    <h3 class="small-title serif">Find care</h3>
+                    <p class="text-small">Describe your issue and get matched to the right kind of doctor, in or out of your network.</p>
+                </section>
+                <section class="card card-small">
+                    <h3 class="small-title serif">Estimate cost</h3>
+                    <p class="text-small">See what a visit may cost with your plan before you book, then request a callback from the office.</p>
+                </section>
+                <section class="card card-small">
+                    <h3 class="small-title serif">Check a bill</h3>
+                    <p class="text-small">Upload a bill and see every charge compared with your coverage, with what you are expected to owe.</p>
+                </section>
+            </div>
+
+            <section class="card">
+                <h2 class="card-title serif">Our promise</h2>
+                <p class="text">We explain deductibles, copays and coinsurance in plain words. Figures are estimates; your insurer and provider set the final amount. Your bills are read for text only and are not shared.</p>
+            </section>
+
+            <section class="card cta">
+                <div>
+                    <h2 class="card-title serif">Ready to start?</h2>
+                    <p class="text">Find a doctor or check a bill in a couple of minutes.</p>
+                </div>
+                <div class="cta-buttons">
+                    <button class="btn btn-solid" onclick={goFindCare}>Find care</button>
+                    <button class="btn btn-line" onclick={goCheckBill}>Check a bill</button>
+                </div>
+            </section>
+        </div>
+        <c-app-footer></c-app-footer>
+    </div>
+</template>

@@ -1,0 +1,73 @@
+<template>
+    <div class="lg-page">
+        <div class="lg-split">
+            <section class="lg-about">
+                <div class="lg-brand">
+                    <svg viewBox="0 0 40 46" width="36" height="42" aria-hidden="true">
+                        <path d="M20 2 L37 8 V23 C37 33 30 40 20 44 C10 40 3 33 3 23 V8 Z" fill="#24335C" stroke="#E8A33D" stroke-width="2" stroke-linejoin="round"></path>
+                        <path d="M7 24 H14 L17 15 L22 32 L26 21 L28 24 H33" fill="none" stroke="#E8A33D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span>Care Compass</span>
+                </div>
+                <h2 class="lg-headline">Find the right doctor.<br>Know what you owe.</h2>
+                <p class="lg-lead">Find a doctor, see your estimated cost, and request an appointment. Already have a bill? Check every charge against your own plan and see what looks too high.</p>
+                <ul class="lg-feats">
+                    <li>
+                        <span class="lg-ico" aria-hidden="true">1</span>
+                        <div><b>Find the right doctor</b><span>Describe what is wrong, see matched doctors, their network status and an estimated cost, then request an appointment.</span></div>
+                    </li>
+                    <li>
+                        <span class="lg-ico" aria-hidden="true">2</span>
+                        <div><b>Check a bill</b><span>Paste or upload an itemized bill and get a charge-by-charge breakdown in plain language.</span></div>
+                    </li>
+                    <li>
+                        <span class="lg-ico" aria-hidden="true">3</span>
+                        <div><b>Question a charge</b><span>Charges priced above the typical rate are flagged, with a ready-to-send letter and a phone script.</span></div>
+                    </li>
+                </ul>
+                <p class="lg-note">Estimates are based on your plan's published rules. They are not a final bill.</p>
+            </section>
+            <div class="lg-wrap">
+                <div class="lg-brand lg-brand-mobile">
+                    <svg viewBox="0 0 40 46" width="32" height="37" aria-hidden="true">
+                        <path d="M20 2 L37 8 V23 C37 33 30 40 20 44 C10 40 3 33 3 23 V8 Z" fill="#24335C" stroke="#E8A33D" stroke-width="2" stroke-linejoin="round"></path>
+                        <path d="M7 24 H14 L17 15 L22 32 L26 21 L28 24 H33" fill="none" stroke="#E8A33D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span>Care Compass</span>
+                </div>
+                <div class="lg-card">
+                    <h1 class="lg-title">Welcome back</h1>
+                    <p class="lg-sub">Log in to check bills and find care.</p>
+
+                    <template if:true={errorMessage}>
+                        <p class="lg-msg lg-error" role="alert">{errorMessage}</p>
+                    </template>
+                    <template if:true={infoMessage}>
+                        <p class="lg-msg lg-info" role="status">{infoMessage}</p>
+                    </template>
+
+                    <label class="lg-label" for="lg-user">Username</label>
+                    <input id="lg-user" class="lg-input" type="text" autocomplete="username" value={username} onchange={handleUsername} onkeyup={handleKey} />
+
+                    <label class="lg-label" for="lg-pass">Password</label>
+                    <div class="lg-pass">
+                        <input id="lg-pass" class="lg-input" type={passwordType} autocomplete="current-password" value={password} onchange={handlePassword} onkeyup={handleKey} />
+                        <button class="lg-show" type="button" onclick={toggleShow}>{toggleLabel}</button>
+                    </div>
+
+                    <button class="lg-btn" onclick={handleLogin} disabled={isSubmitting}>{submitLabel}</button>
+
+                    <div class="lg-links">
+                        <button class="lg-link" type="button" onclick={handleForgot}>Forgot your password?</button>
+                    </div>
+                </div>
+
+                <div class="lg-new">
+                    <span>New patient?</span>
+                    <button class="lg-btn-outline" onclick={goRegister}>Create an account</button>
+                </div>
+                <!--<a class="lg-emp" href={employeeUrl}>Are you an employee? Log in</a>-->
+            </div>
+        </div>
+    </div>
+</template>

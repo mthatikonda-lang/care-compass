@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insurance_Plan__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <label>Insurance Plan</label>
+    <referenceTo>Insurance_Plan__c</referenceTo>
+    <relationshipLabel>Coverage Rules</relationshipLabel>
+    <relationshipName>Coverage_Rules</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

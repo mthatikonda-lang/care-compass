@@ -1,0 +1,495 @@
+:host {
+    display: block;
+}
+
+.an-banner {
+    background: linear-gradient(135deg, var(--cc-navy, #16213E) 0%, var(--cc-navy-2, #24335C) 100%);
+    color: #FBF8F3;
+    padding: 1.5rem 2rem 4.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.an-banner-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.an-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.an-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #E8A33D;
+}
+
+.an-nav-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+}
+
+.an-pills {
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.an-pill {
+    border: none;
+    background: transparent;
+    color: rgba(251, 248, 243, 0.85);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.an-pill:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.an-pill-active,
+.an-pill-active:hover {
+    background: #E8A33D;
+    color: #16213E;
+}
+
+.an-menu-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.an-avatar {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #E8A33D;
+    color: #16213E;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.an-avatar-open {
+    box-shadow: 0 0 0 3px rgba(232, 163, 61, 0.45);
+}
+
+.an-menu {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 300px;
+    max-width: calc(100vw - 2rem);
+    box-sizing: border-box;
+    padding: 1.1rem;
+    border-radius: 18px;
+    background: var(--cc-surface, #FFFFFF);
+    color: var(--cc-text, #2B3340);
+    box-shadow: var(--cc-card-shadow, 0 18px 44px rgba(22, 33, 62, 0.35));
+    z-index: 30;
+}
+
+.an-menu-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+}
+
+.an-menu-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--cc-navy, #16213E);
+    color: #E8A33D;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.an-menu-name {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--cc-ink, #16213E);
+}
+
+.an-menu-sub {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--cc-muted, #8A93A3);
+}
+
+.an-menu-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--cc-border, #EFEAE0);
+    font-size: 0.85rem;
+}
+
+.an-menu-row span {
+    color: var(--cc-muted, #8A93A3);
+}
+
+.an-menu-row b {
+    color: var(--cc-ink, #16213E);
+    text-align: right;
+}
+
+.an-menu-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+}
+
+.an-menu-btn {
+    flex: 1;
+    padding: 0.6rem 0.5rem;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.an-menu-btn-solid {
+    border: 1px solid var(--cc-ink, #16213E);
+    background: var(--cc-navy, #16213E);
+    color: #FBF8F3;
+}
+
+.an-menu-btn-line {
+    border: 1px solid var(--cc-ink, #16213E);
+    background: var(--cc-surface, #FFFFFF);
+    color: var(--cc-ink, #16213E);
+}
+
+.an-title {
+    margin: 1.6rem 0 0.25rem;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #FBF8F3;
+}
+
+.an-subtitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(251, 248, 243, 0.75);
+}
+
+@media (max-width: 800px) {
+    .an-banner {
+        padding: 1.1rem 1rem 4.25rem;
+    }
+    .an-title {
+        font-size: 1.6rem;
+    }
+}
+
+.an-logo { flex-shrink: 0; display: block; }
+
+/* Keyboard focus */
+.an-brand:focus-visible,
+.an-pill:focus-visible,
+.an-avatar:focus-visible,
+.an-menu-btn:focus-visible {
+    outline: 3px solid #E8A33D;
+    outline-offset: 2px;
+}
+
+/* Small phones: fit all four menu buttons on one row */
+@media (max-width: 520px) {
+    .an-nav-wrap {
+        width: 100%;
+    }
+    .an-pills {
+        flex: 1;
+        min-width: 0;
+        justify-content: space-between;
+        scrollbar-width: none;
+    }
+    .an-pills::-webkit-scrollbar {
+        display: none;
+    }
+    .an-pill {
+        font-size: 0.78rem;
+        padding: 0.45rem 0.6rem;
+    }
+}
+/* ---------- Motion ---------- */
+@keyframes an-fade-down {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes an-fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes an-pop {
+    from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.an-topbar { animation: an-fade-down 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.an-title { animation: an-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+.an-subtitle { animation: an-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both; }
+
+.an-pill {
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+.an-pill:active { transform: scale(0.96); }
+.an-avatar {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.an-avatar:hover { transform: scale(1.06); }
+
+.an-menu {
+    transform-origin: top right;
+    animation: an-pop 0.18s ease-out both;
+}
+
+.an-logo { transition: transform 0.3s ease; }
+.an-brand:hover .an-logo { transform: rotate(-6deg) scale(1.08); }
+
+.an-menu-btn { transition: transform 0.15s ease, box-shadow 0.2s ease; }
+.an-menu-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(22, 33, 62, 0.18); }
+.an-menu-btn:active { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+    .an-topbar, .an-title, .an-subtitle, .an-menu { animation: none; }
+    .an-pill, .an-avatar, .an-logo, .an-menu-btn { transition: none; }
+}
+
+/* =====================================================
+   Modern banner
+   ===================================================== */
+
+.an-banner {
+    position: relative;
+    background:
+        radial-gradient(900px 420px at 8% -10%, rgba(70, 110, 190, 0.22), transparent 60%),
+        radial-gradient(800px 460px at 95% 0%, rgba(91, 141, 214, 0.28), transparent 62%),
+        linear-gradient(135deg, #111B36 0%, #1A2748 55%, var(--cc-navy-2, #24335C) 100%);
+    box-shadow: 0 18px 40px -18px rgba(8, 13, 26, 0.6);
+}
+
+/* Faint dot grid + ECG line and rings on the right, behind the content */
+.an-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 300' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='480' cy='150' r='120' stroke='%23ffffff' stroke-opacity='.07' stroke-width='1.5'/%3E%3Ccircle cx='480' cy='150' r='190' stroke='%23ffffff' stroke-opacity='.05' stroke-width='1.5'/%3E%3Ccircle cx='480' cy='150' r='260' stroke='%23ffffff' stroke-opacity='.035' stroke-width='1.5'/%3E%3Cpath d='M0 170 H250 L280 120 L318 214 L352 142 L372 170 H640' stroke='%23E8A33D' stroke-opacity='.28' stroke-width='2'/%3E%3C/svg%3E");
+    background-size: 640px 300px;
+    background-position: right -40px center;
+    background-repeat: no-repeat;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+}
+
+/* Slow breathing gold glow (opacity only) */
+.an-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(420px 260px at 18% 78%, rgba(232, 163, 61, 0.09), transparent 70%);
+    animation: an-breathe 7s ease-in-out infinite;
+}
+@keyframes an-breathe { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+/* No z-index here on purpose, so the patient menu still sits above the cards */
+.an-banner-inner { position: relative; }
+
+.an-brand { letter-spacing: 0.01em; font-size: 1.25rem; }
+.an-logo { filter: drop-shadow(0 0 10px rgba(232, 163, 61, 0.4)); }
+
+/* Glass pill bar */
+.an-pills {
+    padding: 5px;
+    gap: 3px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 24px -12px rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+.an-pill {
+    padding: 0.55rem 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: rgba(251, 248, 243, 0.78);
+}
+.an-pill:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.1); }
+.an-pill-active,
+.an-pill-active:hover {
+    font-weight: 700;
+    background: linear-gradient(180deg, #F3B955, #E8A33D);
+    color: #16213E;
+    box-shadow: var(--cc-pill-shadow, 0 6px 16px -4px rgba(232, 163, 61, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.35));
+}
+
+/* Avatar with a soft gold ring */
+.an-avatar {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(145deg, #F3C77A, #E8A33D);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18), 0 8px 18px -4px rgba(232, 163, 61, 0.6);
+}
+.an-avatar-open { box-shadow: 0 0 0 3px rgba(232, 163, 61, 0.5), 0 8px 18px -4px rgba(232, 163, 61, 0.6); }
+
+/* Greeting */
+.an-title {
+    margin: 2rem 0 0.3rem;
+    font-size: 2.7rem;
+    letter-spacing: -0.02em;
+    background: linear-gradient(180deg, #FFFFFF 30%, #E9DFC9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+.an-title::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin-top: 0.75rem;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #E8A33D, #F3C77A);
+    box-shadow: 0 0 12px rgba(232, 163, 61, 0.6);
+}
+.an-subtitle { margin-top: 0.7rem; font-size: 1rem; letter-spacing: 0.01em; color: rgba(251, 248, 243, 0.8); }
+
+/* Sign-out button when the menu is hidden (first-time setup) */
+.an-topbar > .an-pill {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Patient menu */
+.an-menu {
+    border-radius: 22px;
+    border: 1px solid var(--cc-border, #EFE7D6);
+    box-shadow: 0 30px 60px -18px rgba(8, 13, 26, 0.55);
+    border-top-color: var(--cc-edge-top, #EFE7D6);
+    border-left-color: var(--cc-edge-left, #EFE7D6);
+}
+.an-menu-avatar { background: linear-gradient(145deg, var(--cc-navy-2, #24335C), var(--cc-navy, #16213E)); box-shadow: 0 6px 14px -4px rgba(22, 33, 62, 0.5); }
+
+@media (max-width: 800px) {
+    .an-title { font-size: 2rem; margin-top: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .an-banner::after { animation: none; opacity: 0.7; }
+}
+
+/* The top bar's entrance animation makes it its own layer, which trapped the patient menu
+   behind the dashboard cards. Give that layer a higher level than the cards (z-index 1). */
+.an-topbar {
+    position: relative;
+    z-index: 20;
+}
+
+
+/* ---------- Light / dark toggle ---------- */
+.an-theme {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #F3C77A;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: background 0.2s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.an-theme:hover { background: rgba(255, 255, 255, 0.16); transform: rotate(18deg) scale(1.06); }
+.an-theme:focus-visible { outline: 3px solid #E8A33D; outline-offset: 2px; }
+.an-theme svg { display: block; }
+.an-setup-actions { display: inline-flex; align-items: center; gap: 0.6rem; }
+@media (prefers-reduced-motion: reduce) {
+    .an-theme { transition: none; }
+    .an-theme:hover { transform: none; }
+}
+
+/* =====================================================
+   Animated logo: shield draws in, the heartbeat line
+   draws, then the logo beats gently with a light sweep
+   ===================================================== */
+.an-logo-g { transform-box: fill-box; transform-origin: center; animation: an-beat 3.6s ease-in-out 1.8s infinite; }
+.an-logo-shield {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    fill-opacity: 0;
+    animation: an-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards, an-fill 0.5s ease-out 0.8s forwards;
+}
+.an-logo-ecg {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: an-draw 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+}
+.an-logo-pulse {
+    stroke-dasharray: 16 84;
+    stroke-dashoffset: 16;
+    opacity: 0;
+    animation: an-sweep 3.6s linear 1.8s infinite;
+}
+@keyframes an-draw { to { stroke-dashoffset: 0; } }
+@keyframes an-fill { to { fill-opacity: 1; } }
+@keyframes an-sweep {
+    0%   { stroke-dashoffset: 16; opacity: 0; }
+    6%   { opacity: 1; }
+    40%  { stroke-dashoffset: -100; opacity: 1; }
+    46%, 100% { stroke-dashoffset: -100; opacity: 0; }
+}
+@keyframes an-beat {
+    0%, 30%, 100% { transform: scale(1); }
+    8%  { transform: scale(1.09); }
+    16% { transform: scale(1); }
+    22% { transform: scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .an-logo-g, .an-logo-pulse { animation: none; }
+    .an-logo-pulse { opacity: 0; }
+    .an-logo-shield, .an-logo-ecg { animation: none; stroke-dashoffset: 0; fill-opacity: 1; }
+}

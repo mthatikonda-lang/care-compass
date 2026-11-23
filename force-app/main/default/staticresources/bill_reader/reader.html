@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bill reader</title>
+</head>
+<body>
+<script>
+// Reads a bill (PDF or image) for the Check a Bill page. It runs in its own frame so the
+// browser can start the OCR and PDF workers, which Lightning Web Security does not allow
+// inside the component itself. The file is read here in the browser and is never uploaded.
+(function () {
+    var ME = 'bill-reader';
+    var MAX_PDF_PAGES = 6;
+    var MAX_IMAGE_SIDE = 2200;
+    var urls = null;
+    var loaded = {};
+
+    function send(message) {
+        message.from = ME;
+        parent.postMessage(message, window.location.origin);
+    }
+
+    // Sends a progress note to the page (it shows in the console), so a stuck step can be found.
+    function log(text) {
+        console.log('bill-reader:', text);
+        send({ type: 'log', text: text });
+    }
+
+    function withTimeout(promise, label, ms) {
+        return Promise.race([
+            promise,
+            new Promise(function (resolve, reject) {
+                setTimeout(function () { reject(new Error('Timed out: ' + label)); }, ms);
+            })
+        ]);
+    }
+
+    window.addEventListener('error', function (e) {
+        log('window error: ' + (e && e.message ? e.message : 'unknown') + (e && e.filename ? ' at ' + e.filename : ''));
+    });
+    window.addEventListener('unhandledrejection', function (e) {
+        log('unhandled rejection: ' + (e && e.reason && e.reason.message ? e.reason.message : String(e && e.reason)));
+    });
+    document.addEventListener('securitypolicyviolation', function (e) {
+        log('blocked by security policy: ' + e.violatedDirective + ' -> ' + e.blockedURI);
+    });
+
+    function loadScript(url) {
+        if (loaded[url]) {
+            return loaded[url];
+        }
+        loaded[url] = new Promise(function (resolve, reject) {
+            var s = document.createElement('script');
+            s.src = url;
+            s.onload = resolve;
+            s.onerror = function () { reject(new Error('Could not load ' + url)); };
+            document.head.appendChild(s);
+        });
+        return loaded[url];
+    }
+
+    async function ocrCanvases(canvases, id) {
+        log('loading tesseract.min.js');
+        await withTimeout(loadScript(urls.tesseract + '/tesseract.min.js'), 'load tesseract.min.js', 30000);
+        log('tesseract.min.js loaded; starting OCR worker');
+        send({ type: 'status', id: id, text: 'Getting ready to read your bill…' });
+        var worker = await withTimeout(window.Tesseract.createWorker('eng', 1, {
+            workerPath: urls.tesseract + '/worker.min.js',
+            corePath: urls.core + '/tesseract-core-lstm.wasm.js',
+            langPath: urls.lang,
+            gzip: true,
+            workerBlobURL: false,
+            cacheMethod: 'none',
+            logger: function (m) {
+                if (m && m.status) { log('ocr: ' + m.status + (typeof m.progress === 'number' ? ' ' + Math.round(m.progress * 100) + '%' : '')); }
+                if (m && m.status === 'recognizing text') {
+                    send({ type: 'status', id: id, text: 'Reading your bill… ' + Math.round(m.progress * 100) + '%' });
+                }
+            },
+            errorHandler: function (err) { log('ocr worker error: ' + (err && err.message ? err.message : String(err))); }
+        }), 'start the OCR worker', 60000);
+        log('OCR worker ready');
+        try {
+            var texts = [];
+            for (var i = 0; i < canvases.length; i++) {
+                log('recognizing text');
+                var out = await withTimeout(worker.recognize(canvases[i]), 'recognize text', 90000);
+                texts.push(out.data.text || '');
+            }
+            return texts;
+        } finally {
+            try { await worker.terminate(); } catch (e) { /* nothing to clean up */ }
+        }
+    }
+
+    async function readImage(buffer, mime, id) {
+        log('decoding image (' + buffer.byteLength + ' bytes)');
+        var bitmap = await createImageBitmap(new Blob([buffer], { type: mime || 'image/png' }));
+        var scale = Math.min(1, MAX_IMAGE_SIDE / Math.max(bitmap.width, bitmap.height));
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(bitmap.width * scale);
+        canvas.height = Math.round(bitmap.height * scale);
+        canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        var texts = await ocrCanvases([canvas], id);
+        return { text: texts[0], note: '' };
+    }
+
+    // Rebuilds the lines of a text PDF page: items at the same height are one line.
+    async function pdfPageText(page) {
+        var content = await page.getTextContent();
+        var rows = {};
+        content.items.forEach(function (it) {
+            if (!it.str || !it.str.trim()) { return; }
+            var y = Math.round(it.transform[5] / 3);
+            (rows[y] = rows[y] || []).push(it);
+        });
+        return Object.keys(rows).map(Number).sort(function (a, b) { return b - a; }).map(function (y) {
+            return rows[y].sort(function (a, b) { return a.transform[4] - b.transform[4]; })
+                .map(function (it) { return it.str.trim(); }).join('  ');
+        }).join('\n');
+    }
+
+    async function readPdf(buffer, id) {
+        send({ type: 'status', id: id, text: 'Loading the PDF reader…' });
+        log('loading pdf.min.js');
+        await withTimeout(loadScript(urls.pdfjs + '/pdf.min.js'), 'load pdf.min.js', 30000);
+        var pdfjs = window.pdfjsLib;
+        pdfjs.GlobalWorkerOptions.workerSrc = urls.pdfjs + '/pdf.worker.min.js';
+        log('opening PDF');
+        var doc = await withTimeout(pdfjs.getDocument({ data: new Uint8Array(buffer) }).promise, 'open PDF', 30000);
+        log('PDF opened, pages = ' + doc.numPages);
+        var pageCount = Math.min(doc.numPages, MAX_PDF_PAGES);
+        var texts = [];
+        for (var i = 1; i <= pageCount; i++) {
+            send({ type: 'status', id: id, text: 'Reading page ' + i + ' of ' + pageCount + '…' });
+            var page = await doc.getPage(i);
+            var text = await pdfPageText(page);
+            if (text.replace(/\s/g, '').length < 20) {
+                // A scanned page has no real text, so read the page picture instead.
+                var viewport = page.getViewport({ scale: 2 });
+                var canvas = document.createElement('canvas');
+                canvas.width = Math.round(viewport.width);
+                canvas.height = Math.round(viewport.height);
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise;
+                text = (await ocrCanvases([canvas], id))[0];
+            }
+            texts.push(text);
+        }
+        return {
+            text: texts.join('\n'),
+            note: doc.numPages > MAX_PDF_PAGES ? 'Only the first ' + MAX_PDF_PAGES + ' pages were read. ' : ''
+        };
+    }
+
+    window.addEventListener('message', async function (event) {
+        var d = event.data;
+        if (event.origin !== window.location.origin || !d || d.to !== ME) {
+            return;
+        }
+        if (d.type === 'ping') {
+            send({ type: 'loaded' });
+            return;
+        }
+        if (d.type === 'init') {
+            urls = d.urls;
+            send({ type: 'ready' });
+            return;
+        }
+        if (d.type === 'read') {
+            try {
+                log('received ' + d.kind + ' (' + (d.buffer ? d.buffer.byteLength : 'no') + ' bytes)');
+                if (!urls) { throw new Error('Reader was not set up'); }
+                var res = d.kind === 'pdf' ? await readPdf(d.buffer, d.id) : await readImage(d.buffer, d.mime, d.id);
+                send({ type: 'result', id: d.id, text: res.text, note: res.note });
+            } catch (e) {
+                send({ type: 'error', id: d.id, message: (e && e.message) ? e.message : String(e) });
+            }
+        }
+    });
+
+    send({ type: 'loaded' });
+})();
+</script>
+</body>
+</html>

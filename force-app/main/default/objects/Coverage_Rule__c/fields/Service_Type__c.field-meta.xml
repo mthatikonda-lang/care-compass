@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Type__c</fullName>
+    <label>Service Type</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Office Visit</fullName>
+                <default>false</default>
+                <label>Office Visit</label>
+            </value>
+            <value>
+                <fullName>Imaging</fullName>
+                <default>false</default>
+                <label>Imaging</label>
+            </value>
+            <value>
+                <fullName>Specialist Visit</fullName>
+                <default>false</default>
+                <label>Specialist Visit</label>
+            </value>
+            <value>
+                <fullName>Preventive / Immunization</fullName>
+                <default>false</default>
+                <label>Preventive / Immunization</label>
+            </value>
+            <value>
+                <fullName>Lab Test</fullName>
+                <default>false</default>
+                <label>Lab Test</label>
+            </value>
+            <value>
+                <fullName>Advanced Imaging</fullName>
+                <default>false</default>
+                <label>Advanced Imaging</label>
+            </value>
+            <value>
+                <fullName>Emergency Room</fullName>
+                <default>false</default>
+                <label>Emergency Room</label>
+            </value>
+            <value>
+                <fullName>Outpatient Procedure</fullName>
+                <default>false</default>
+                <label>Outpatient Procedure</label>
+            </value>
+            <value>
+                <fullName>Surgery / Hospital Stay</fullName>
+                <default>false</default>
+                <label>Surgery / Hospital Stay</label>
+            </value>
+            <value>
+                <fullName>Physical Therapy</fullName>
+                <default>false</default>
+                <label>Physical Therapy</label>
+            </value>
+            <value>
+                <fullName>Mental Health Visit</fullName>
+                <default>false</default>
+                <label>Mental Health Visit</label>
+            </value>
+            <value>
+                <fullName>DME / Other</fullName>
+                <default>false</default>
+                <label>DME / Other</label>
+            </value>
+            <value>
+                <fullName>Prescription / Drug</fullName>
+                <default>false</default>
+                <label>Prescription / Drug</label>
+            </value>
+            <value>
+                <fullName>Dental Exam</fullName>
+                <default>false</default>
+                <label>Dental Exam</label>
+            </value>
+            <value>
+                <fullName>Dental X-rays</fullName>
+                <default>false</default>
+                <label>Dental X-rays</label>
+            </value>
+            <value>
+                <fullName>Dental Cleaning</fullName>
+                <default>false</default>
+                <label>Dental Cleaning</label>
+            </value>
+            <value>
+                <fullName>Dental Filling</fullName>
+                <default>false</default>
+                <label>Dental Filling</label>
+            </value>
+            <value>
+                <fullName>Dental Extraction</fullName>
+                <default>false</default>
+                <label>Dental Extraction</label>
+            </value>
+            <value>
+                <fullName>Dental Root Canal</fullName>
+                <default>false</default>
+                <label>Dental Root Canal</label>
+            </value>
+            <value>
+                <fullName>Dental Crown</fullName>
+                <default>false</default>
+                <label>Dental Crown</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

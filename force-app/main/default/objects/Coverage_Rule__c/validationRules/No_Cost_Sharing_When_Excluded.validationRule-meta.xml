@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Cost_Sharing_When_Excluded</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    Excluded__c,
+    NOT( ISPICKVAL(Cost_Sharing_Method__c, &apos;&apos;))
+  )</errorConditionFormula>
+    <errorDisplayField>Cost_Sharing_Method__c</errorDisplayField>
+    <errorMessage>Excluded services don&apos;t need a cost sharing method — the patient pays in full.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,42 @@
+<template>
+    <div class="pf-page">
+        <c-app-nav active="profile">
+            <template if:true={hasData}>
+                <div class="pf-head">
+                    <span class="pf-avatar">{initials}</span>
+                    <div class="pf-head-text">
+                        <h1 class="pf-name">{profile.fullName}</h1>
+                        <div class="pf-chips">
+                            <template if:true={profile.patientId}><span class="pf-chip">Patient {profile.patientId}</span></template>
+                            <template if:true={profile.planName}><span class="pf-chip">{profile.planName}</span></template>
+                        </div>
+                    </div>
+                                    </div>
+            </template>
+        </c-app-nav>
+
+        <div class="pf-body">
+            <template if:true={error}><p class="pf-state">{error}</p></template>
+            <template if:false={loaded}><p class="pf-state">Loading your profile…</p></template>
+            <template if:true={hasData}>
+                <div class="pf-grid">
+                    <section class="pf-card">
+                        <h2 class="pf-title">Insurance</h2>
+                        <template for:each={insuranceRows} for:item="r">
+                            <div key={r.label} class="pf-row"><span>{r.label}</span><b>{r.value}</b></div>
+                        </template>
+                        <button class="pf-btn" onclick={goEditInsurance}>Edit insurance</button>
+                    </section>
+                    <section class="pf-card">
+                        <h2 class="pf-title">Personal details</h2>
+                        <template for:each={personalRows} for:item="r">
+                            <div key={r.label} class="pf-row"><span>{r.label}</span><b>{r.value}</b></div>
+                        </template>
+                        <button class="pf-btn" onclick={goEditProfile}>Edit profile</button>
+                    </section>
+                </div>
+            </template>
+        </div>
+        <c-app-footer></c-app-footer>
+    </div>
+</template>

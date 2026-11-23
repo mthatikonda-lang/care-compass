@@ -1,0 +1,17 @@
+<template>
+    <div class="page">
+        <c-app-nav active="" heading={heading} subtitle={subtitle}></c-app-nav>
+
+        <div class="body">
+            <section class="card">
+                <template for:each={sections} for:item="s">
+                    <div key={s.key} class="legal-block">
+                        <h2 class="card-title serif">{s.title}</h2>
+                        <p class="text">{s.text}</p>
+                    </div>
+                </template>
+            </section>
+        </div>
+        <c-app-footer></c-app-footer>
+    </div>
+</template>
